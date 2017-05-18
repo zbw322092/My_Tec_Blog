@@ -1,0 +1,22 @@
+{
+  "name": "my_tec_blog",
+  "version": "1.0.0",
+  "description": "Tec Blog Based on Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zbw322092/My_Tec_Blog.git"
+  },
+  "author": "Bowen Zhong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zbw322092/My_Tec_Blog/issues"
+  },
+  "homepage": "https://github.com/zbw322092/My_Tec_Blog#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
