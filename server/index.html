@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app="my_tec_blog">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,12 @@
   <title>Document</title>
 </head>
 <body>
-  Entry File
+
+  <div ui-view></div>
+
+  <script src="../lib/lib_vendor/angular.min.js"></script>
+  <script src="../lib/lib_vendor/angular-ui-router.min.js"></script>
+  <script src="../client/app.js"></script>
+  <script src="../client/controllers/IndexCtrl.js"></script>
 </body>
 </html>
