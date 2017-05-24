@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/zbw322092/My_Tec_Blog#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "mysql": "^2.13.0"
   }
 }
