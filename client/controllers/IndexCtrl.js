@@ -35,7 +35,7 @@ app.controller('IndexCtrl', [
           'Content-Type': 'application/json'
         },
         data: {
-          title: $scope.postTitle,
+          postTitle: $scope.postTitle,
           author: $scope.postAuthor,
           content: $scope.postContent
         }
