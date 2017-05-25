@@ -8,7 +8,6 @@ router.get('/posts', function(req, res) {
 
 router.post('/post', function(req, res) {
   console.log(req.body);
-  console.log('req.getConnection: ', req.getConnection);
   postModel.createPost(req);
 });
 
