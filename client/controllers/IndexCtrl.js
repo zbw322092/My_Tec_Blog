@@ -18,6 +18,8 @@ app.controller('IndexCtrl', [
         console.log('err: ', err);
       });
 
+
+
     // submit post
     $scope.submitPost = function() {
       console.log(
@@ -25,6 +27,28 @@ app.controller('IndexCtrl', [
         'Post author: '+ $scope.postAuthor, 
         'Post content: '+ $scope.postContent
       );
+
+      var createPostSetting = {
+        method: 'POST',
+        url: '/post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          title: $scope.postTitle,
+          author: $scope.postAuthor,
+          content: $scope.postContent
+        }
+      };
+
+      $http(createPostSetting)
+        .then(function(result) {
+          console.log('post result: ', result);
+        })
+        .catch(function(err) {
+          console.log('post err: ', err);
+        });
+
     };
 
 
