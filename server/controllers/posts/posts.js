@@ -3,7 +3,7 @@ var router = express.Router();
 var postModel = require('../../models/posts/postModel.js');
 
 router.get('/posts', function(req, res) {
-  res.send('I am a separate router');
+  postModel.getAllPost(req, res);
 });
 
 router.post('/post', function(req, res) {

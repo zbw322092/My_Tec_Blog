@@ -1,3 +1,4 @@
+var mysql = require('mysql');
 var db = require('../../database');
 
 module.exports = {
@@ -50,7 +51,32 @@ module.exports = {
         }
       );
     });
-  }
+  },
 
+  getAllPost: function(req, res) {
+    var sql = "SELECT * FROM blogs LEFT JOIN blog_body ON blogs.post_id = blog_body.post_id";
+    sql = mysql.format(sql);
+    db.query(sql, function(error, results, fields) {
+      if (error) {
+        return res
+          .status(500)
+          .json({
+            message: 'get post error'
+          })
+      }
+      
+      results.forEach(function(value, key, array) {
+        console.log('Post: ', value);
+        console.log('Post author: ', value.author);
+      });
+
+      res
+        .status(200)
+        .json({
+          message: 'success',
+          data: results
+        });
+    });
+  }
 
 }
