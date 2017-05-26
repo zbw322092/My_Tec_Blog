@@ -12,22 +12,22 @@ app.controller('IndexCtrl', [
     };
     $http(getPostSetting)
       .then(function(result) {
-        console.log('result: ', result);
+        var responseData = result.data.data;
+        console.log('result: ', result.data.data);
+        initiPage(responseData);
       })
       .catch(function(err) {
         console.log('err: ', err);
       });
 
+    function initiPage(result) {
+      $scope.posts = result;
+    }
+
 
 
     // submit post
     $scope.submitPost = function() {
-      console.log(
-        'Post title: '+ $scope.postTitle, 
-        'Post author: '+ $scope.postAuthor, 
-        'Post content: '+ $scope.postContent
-      );
-
       var createPostSetting = {
         method: 'POST',
         url: '/post',
@@ -48,7 +48,6 @@ app.controller('IndexCtrl', [
         .catch(function(err) {
           console.log('post err: ', err);
         });
-
     };
 
 
