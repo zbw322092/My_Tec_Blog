@@ -8,7 +8,7 @@ router.get('/posts', function(req, res) {
 
 router.post('/post', function(req, res) {
   console.log(req.body);
-  postModel.createPost(req);
+  postModel.createPost(req, res);
 });
 
 module.exports = router;

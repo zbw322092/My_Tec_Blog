@@ -1,7 +1,7 @@
 var db = require('../../database');
 
 module.exports = {
-  createPost: function(req) {
+  createPost: function(req, res) {
     db.beginTransaction(function(err) {
       if (err) { throw err; }
       var createTimestamp = 'TB'+ + new Date();
@@ -39,6 +39,9 @@ module.exports = {
                 }
 
                 console.log('create post success!');
+                res
+                  .status(200)
+                  .json({message: 'success'});
               });
 
             }
