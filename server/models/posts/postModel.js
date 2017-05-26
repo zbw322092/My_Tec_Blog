@@ -54,7 +54,7 @@ module.exports = {
   },
 
   getAllPost: function(req, res) {
-    var sql = "SELECT * FROM blogs LEFT JOIN blog_body ON blogs.post_id = blog_body.post_id";
+    var sql = "SELECT *, DATE_FORMAT(created, '%Y-%m-%d') AS created FROM blogs LEFT JOIN blog_body ON blogs.post_id = blog_body.post_id";
     sql = mysql.format(sql);
     db.query(sql, function(error, results, fields) {
       if (error) {
