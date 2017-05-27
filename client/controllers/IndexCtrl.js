@@ -1,9 +1,11 @@
 app.controller('IndexCtrl', [
   '$scope',
   '$http',
+  'ngDialog',
   function(
     $scope,
-    $http
+    $http,
+    ngDialog
   ) {
 
     var getPostSetting = {
@@ -47,6 +49,42 @@ app.controller('IndexCtrl', [
         })
         .catch(function(err) {
           console.log('post err: ', err);
+        });
+    };
+
+
+    $scope.clickToOpen = function () {
+        ngDialog.open({ 
+          template: 'templateId',
+          className: 'ngdialog-theme-default',
+          // showClose: false
+         });
+    };
+
+    $scope.login = function() {
+      
+    };
+
+    $scope.signUp = function() {
+      var signUpSetting = {
+        method: 'POST',
+        url: '/register',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          name: 'Bowen',
+          email: '322092@hotmail.com',
+          phone: '18800263760',
+          password: '322092'
+        }
+      }
+      $http(signUpSetting)
+        .then(function(result) {
+          console.log('sign up result: ', result);
+        })
+        .catch(function(err) {
+          console.log('sign up error: ', err);
         });
     };
 

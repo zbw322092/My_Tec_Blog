@@ -1,13 +1,18 @@
-<section class="single-post" ng-repeat="post in posts">
+<div class="main-page">
+  <section class="single-post" ng-repeat="post in posts">
 
-  <div class="post-title" ng-bind="post.post_title"></div>
-  <em class="post-author">
-    <span class="author-name" ng-bind="post.author"></span>
-    <span class="create-time" ng-bind="post.created"></span></em>
-  <p class="post-content" ng-bind="post.post_content"></p>
+    <div class="post-title" ng-bind="post.post_title"></div>
+    <em class="post-author">
+      <span class="author-name" ng-bind="post.author"></span>
+      <span class="create-time" ng-bind="post.created"></span></em>
+    <p class="post-content" ng-bind="post.post_content"></p>
 
 
-</section>
+  </section>
+
+  <button class="login" ng-click="login()">Login</button>
+  <button class="sign-up" ng-click="signUp()">Sign Up</button>
+</div>
 
 
 <!--<form>

@@ -40,7 +40,7 @@ module.exports = {
                 }
 
                 console.log('create post success!');
-                res
+                return res
                   .status(200)
                   .json({message: 'success'});
               });
@@ -70,7 +70,7 @@ module.exports = {
         console.log('Post author: ', value.author);
       });
 
-      res
+      return res
         .status(200)
         .json({
           message: 'success',
