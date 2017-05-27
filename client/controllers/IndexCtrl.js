@@ -73,10 +73,10 @@ app.controller('IndexCtrl', [
           'Content-Type': 'application/json'
         },
         data: {
-          name: 'Bowen',
-          email: '322092@hotmail.com',
-          phone: '18800263760',
-          password: '322092'
+          name: 'yourname',
+          email: 'youremail@hotmail.com',
+          phone: '13511111111',
+          password: 'yourpasswrod'
         }
       }
       $http(signUpSetting)
