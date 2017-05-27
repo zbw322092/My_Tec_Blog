@@ -41,6 +41,62 @@ module.exports = {
         });
       });
     });
+  },
+
+  login: function(req, res) {
+    db.query('SELECT name, email, password FROM users WHERE ? = email',
+    [req.body.email],
+    function(error, results, fields) {
+      if (error) {
+        return res
+          .status(500)
+          .json({
+            message: 'login error'
+          });
+      }
+      console.log(results);
+      if (results.length > 1) {
+        res
+          .status(500)
+          .json({
+            message: 'get user data error'
+          });
+      } else if(results.length === 0) {
+        res
+          .status(500)
+          .json({
+            message: 'user not exist'
+          });
+      } else {
+        matchPassword(req.body.password, results[0].password);
+      }
+
+      function matchPassword(password, hash) {
+        bcrypt.compare(password, hash, function(err, matched) {
+          if (err) {
+            return res
+              .status(500)
+              .json({
+                message: 'compare error'
+              });
+          }
+
+          if (matched) {
+            return res
+              .status(200)
+              .json({
+                message: 'login successfully'
+              });
+          } else {
+            return res
+              .status(200)
+              .json({
+                message: 'login failed'
+              });
+          }
+        });
+      }
+    });
   }
 
 

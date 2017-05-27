@@ -62,7 +62,25 @@ app.controller('IndexCtrl', [
     };
 
     $scope.login = function() {
-      
+      var loginSetting = {
+        method: 'POST',
+        url: '/login',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          email: 'youremail@hotmail.com',
+          password: 'yourpassword'
+        }
+      };
+
+      $http(loginSetting)
+        .then(function(result) {
+          console.log('login result: ', result);
+        })
+        .catch(function(err) {
+          console.log('login err: ', err);
+        });
     };
 
     $scope.signUp = function() {
@@ -76,7 +94,7 @@ app.controller('IndexCtrl', [
           name: 'yourname',
           email: 'youremail@hotmail.com',
           phone: '13511111111',
-          password: 'yourpasswrod'
+          password: 'yourpassword'
         }
       }
       $http(signUpSetting)
