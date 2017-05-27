@@ -8,5 +8,7 @@ module.exports = function(app) {
 
   app.post('/register', usersRoute);
   app.post('/login', usersRoute);
+
+  app.post('/user_exist', usersRoute);
 };
 

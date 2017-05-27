@@ -106,6 +106,26 @@ app.controller('IndexCtrl', [
         });
     };
 
+    $scope.userExist = function() {
+      var userExistSetting = {
+        method: 'POST',
+        url: '/user_exist',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          email: 'youremail@hotmail.com'
+        }
+      }
+      $http(userExistSetting)
+        .then(function(result) {
+          console.log('user exist result: ', result);
+        })
+        .catch(function(err) {
+          console.log('user exist error: ', err);
+        });
+    };
+
 
   }
 ]);

@@ -97,6 +97,22 @@ module.exports = {
         });
       }
     });
+  },
+
+  userExist: function(req, res) {
+    db.query('SELECT count(email) FROM users WHERE email = ?',
+    [req.body.email],
+    function(error, results, fields) {
+      if (error) {
+        return res.status(500).json({ mesaage: 'query failed' });
+      }
+      console.log(results[0]['count(email)']);
+      if (results[0]['count(email)'] > 0) {
+        res.status(200).json({ message: 'email has been taken' });
+      } else if (results[0]['count(email)'] === 0) {
+        res.status(200).json({ message: 'email is ok' });
+      }
+    });
   }
 
 
