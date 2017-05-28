@@ -13,7 +13,7 @@ module.exports = {
       bcrypt.hash(req.body.password, salt, function(err, hash) {
         if (err) {
           return console.log('generate hash error: ', err)
-        }        
+        }
         var createdAt = new Date();
         var users = {
           "id": null,
@@ -24,9 +24,12 @@ module.exports = {
           "created_at":createdAt,
           "updated_at": null
         };
-
-        db.query('INSERT INTO users SET ?', users, function(error, results, fields) {
+        db.query(
+        'INSERT INTO users SET ?',
+        [users], 
+        function(error, results, fields) {
           if (error) {
+            console.log(error);
             return res.json({
               message:'there are some error with query'
             });
