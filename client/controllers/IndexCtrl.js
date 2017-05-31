@@ -62,26 +62,34 @@ app.controller('IndexCtrl', [
     };
 
     // login
-    $scope.login = function() {
-      var loginSetting = {
-        method: 'POST',
-        url: '/login',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          email: 'youremail@hotmail.com',
-          password: 'yourpassword'
-        }
-      };
+    $scope.login = function(hoverStatus) {
+      if (!hoverStatus) {
+        return;
+      }
+      console.log('login');
+      ngDialog.open({
+        template: 'login',
+        plain: true
+      });
+      // var loginSetting = {
+      //   method: 'POST',
+      //   url: '/login',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   data: {
+      //     email: 'youremail@hotmail.com',
+      //     password: 'yourpassword'
+      //   }
+      // };
 
-      $http(loginSetting)
-        .then(function(result) {
-          console.log('login result: ', result);
-        })
-        .catch(function(err) {
-          console.log('login err: ', err);
-        });
+      // $http(loginSetting)
+      //   .then(function(result) {
+      //     console.log('login result: ', result);
+      //   })
+      //   .catch(function(err) {
+      //     console.log('login err: ', err);
+      //   });
     };
 
     // logout
@@ -103,27 +111,28 @@ app.controller('IndexCtrl', [
         });
     };
 
-    $scope.signUp = function() {
-      var signUpSetting = {
-        method: 'POST',
-        url: '/register',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          name: 'myname',
-          email: 'myemail@hotmail.com',
-          phone: '13511111122',
-          password: 'mypassword'
-        }
-      }
-      $http(signUpSetting)
-        .then(function(result) {
-          console.log('sign up result: ', result);
-        })
-        .catch(function(err) {
-          console.log('sign up error: ', err);
-        });
+    $scope.register = function() {
+      console.log('register');
+      // var registerSetting = {
+      //   method: 'POST',
+      //   url: '/register',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   data: {
+      //     name: 'myname',
+      //     email: 'myemail@hotmail.com',
+      //     phone: '13511111122',
+      //     password: 'mypassword'
+      //   }
+      // }
+      // $http(registerSetting)
+      //   .then(function(result) {
+      //     console.log('sign up result: ', result);
+      //   })
+      //   .catch(function(err) {
+      //     console.log('sign up error: ', err);
+      //   });
     };
 
     $scope.userExist = function() {

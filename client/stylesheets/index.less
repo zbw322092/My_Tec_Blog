@@ -1,3 +1,4 @@
+@import 'common.less';
 body {
   margin: 0 !important;
 }
@@ -31,15 +32,55 @@ body {
     }
   }
 
-  .login {
+  .login-or-register {
     position: absolute;
-    right: 100px;
-    top: 0;
+    width: 50px;
+    height: 50px;
+    .background('login_or_register.png');
+    right: 50px;
+    top: 20px;
   }
 
-  .sign-up {
-    position: absolute;
-    right: 30px;
-    top: 0;
+  .login-and-register-on-hover {
+    right: 15px !important;
+    .icon-separater {
+      display: inline-block !important;
+    }
+    .register-icon {
+      display: inline-block !important;
+    }
   }
+
+  .login-and-register {
+    position: absolute;
+    height: 50px;
+    right: 49px;
+    top: 20px;
+    .login-icon {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      .background('login_or_register.png');
+      float: left;
+    }
+    .icon-separater {
+      // display: inline-block;
+      display: none;
+      width: 1px;
+      height: 35px;
+      border-right: 2px solid #000000;
+      margin-left: 9px;
+      margin-right: 9px;
+      margin-top: 7.5px;
+    }
+    .register-icon {
+      // display: inline-block;
+      display: none;
+      width: 50px;
+      height: 50px;
+      .background('register.png');
+      float: right;
+    }
+  }
+
 }
