@@ -61,6 +61,7 @@ app.controller('IndexCtrl', [
          });
     };
 
+    // login
     $scope.login = function() {
       var loginSetting = {
         method: 'POST',
@@ -80,6 +81,25 @@ app.controller('IndexCtrl', [
         })
         .catch(function(err) {
           console.log('login err: ', err);
+        });
+    };
+
+    // logout
+    $scope.logout = function() {
+      var logoutSetting = {
+        method: 'GET',
+        url: '/logout',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      $http(logoutSetting)
+        .then(function(result) {
+          console.log('logout result: ', result);
+        })
+        .catch(function(err) {
+          console.log('logout err: ', err);
         });
     };
 

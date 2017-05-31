@@ -104,6 +104,20 @@ module.exports = {
     });
   },
 
+  logout: function(req, res) {
+    req.session.destroy(function(err) {
+      if (err) {
+        return res
+        .status(500)
+        .json({
+          message: 'logout failed'
+        });
+      }
+
+      res.status(200).json({ message: 'logout success' });
+    });
+  },
+
   userExist: function(req, res) {
     db.query('SELECT count(email) FROM users WHERE email = ?',
     [req.body.email],

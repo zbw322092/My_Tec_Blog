@@ -22,7 +22,7 @@ app.use(session({
     client: redisClient
   }),
   cookie: {
-    maxAge: 60000
+    maxAge: 600000
   },
   saveUninitialized: false,
   resave: false
