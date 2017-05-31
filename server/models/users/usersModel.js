@@ -85,6 +85,8 @@ module.exports = {
           }
 
           if (matched) {
+            // when user login success, set the key to redis
+            req.session.key = req.body.email;
             return res
               .status(200)
               .json({
