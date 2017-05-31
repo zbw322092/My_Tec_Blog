@@ -3,23 +3,27 @@
     <label>Email</label>
     <input 
     type="email" 
+    name="email"
     placeholder="email" 
     ng-model="registerUser.email" 
     ng-maxlength="255" 
     required
     >
     <span class="require-sign">*</span>
+    <div class="email-warning" ng-if="registerForm.email.$invalid && !registerForm.email.$pristine">Please enter an valid email</div>
   </div>
   <div class="input-container">
     <label>Username</label>
     <input 
     type="text" 
+    name="username"
     placeholder="username" 
     ng-model="registerUser.username" 
     ng-maxlength="255" 
     required
     >
     <span class="require-sign">*</span>
+    <div class="username-warning" ng-if="registerForm.username.$invalid && !registerForm.username.$pristine">Please enter an valid username</div>
   </div>
   <div class="input-container">
     <label>Phone</label>
@@ -34,24 +38,38 @@
     <label>Password</label>
     <input 
     type="password" 
+    name="password"
     placeholder="password" 
     ng-model="registerUser.password" 
     ng-minlength="6" 
     ng-maxlength="255" 
+    ng-change="evaluatePassword(registerUser.password)"
     required>
     <span class="require-sign">*</span>
+    <div class="password-strength" ng-if="showStrengthBar">
+      <span class="weak-password" ng-show="weekLevel"></span>
+      <span class="middle-password" ng-show="middleLevel"></span>
+      <span class="strong-password" ng-show="strongLevel"></span>
+    </div>
+    <div class="password-warning" ng-if="registerForm.password.$error.minlength && !registerForm.password.$error.required && !registerForm.password.$pristine">Password cannot shorter than 6 characters</div>
+    <div class="password-warning" ng-if="registerForm.password.$error.maxlength && !registerForm.password.$pristine">Password cannot longer than 255 characters</div>
+    <div class="password-warning" ng-if="registerForm.password.$error.required && !registerForm.password.$pristine">Password is required</div>
   </div>
   <div class="input-container">
     <label>Retype password</label>
     <input 
     type="password"
+    name="retypedPassword"
     placeholder="retype password"
     ng-model="registerUser.retypedpassword"
     ng-minlength="6" 
     ng-maxlength="255"
+    ng-change="passwordMatched(registerUser.password, registerUser.retypedpassword)"
     required
     >
     <span class="require-sign">*</span>
+    <div class="password-matched" ng-if="passwordsMatched">Matched!</div>
+    <div class="retyped-password-warning" ng-if="registerForm.retypedPassword.$error.required && !registerForm.retypedPassword.$pristine">Please retype the password</div>
   </div>
-  <button class="register-submit">Register</button>
+  <button class="btn btn-primary register-button">Register</button>
 </form>

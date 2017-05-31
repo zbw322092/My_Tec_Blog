@@ -117,6 +117,7 @@ app.controller('IndexCtrl', [
       ngDialog.open({
         template: '../client/view/register_dialog.html',
         plain: false,
+        scope: $scope,
         className: 'ngdialog-theme-default register-dialog'
       });
       // var registerSetting = {
@@ -139,6 +140,40 @@ app.controller('IndexCtrl', [
       //   .catch(function(err) {
       //     console.log('sign up error: ', err);
       //   });
+    };
+
+    // evaluate password strength(week, middle and strong)
+    $scope.evaluatePassword = function(password) {
+      console.log(password);
+      $scope.showStrengthBar = false;
+      var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+      var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+      if (!password || password.length < 6 || password.length > 255) {
+        return $scope.showStrengthBar = false;
+      } else if (strongRegex.test(password)) {
+        $scope.showStrengthBar = true;
+        $scope.weekLevel = true;
+        $scope.middleLevel = true;
+        $scope.strongLevel = true;
+      } else if (mediumRegex.test(password)) {
+        $scope.showStrengthBar = true;
+        $scope.weekLevel = true;
+        $scope.middleLevel = true;
+        $scope.strongLevel = false;
+      } else {
+        $scope.showStrengthBar = true;
+        $scope.weekLevel = true;
+        $scope.middleLevel = false;
+        $scope.strongLevel = false;
+      }
+    };
+
+    // check whether the retyped password matches previous typed password
+    $scope.passwordMatched = function(password, retypedPassword) {
+      if (password === retypedPassword) {
+        return $scope.passwordsMatched = true;
+      }
+      return $scope.passwordsMatched = false;
     };
 
     $scope.userExist = function() {
