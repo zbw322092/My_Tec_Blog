@@ -1,0 +1,28 @@
+@import 'common.less';
+
+.register-dialog {
+  .ngdialog-close {
+    padding: 0 !important;
+    border: none !important;
+  }
+  
+  .input-container {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+
+    input {
+      position: absolute;
+      width: 200px;
+      height: 30px;
+      left: 180px;
+      top: 50%;
+      .transform(0,-50%);
+      font-size: 14px;
+    }
+    .require-sign {
+      position: absolute;
+      left: 390px;
+    }
+  }
+}

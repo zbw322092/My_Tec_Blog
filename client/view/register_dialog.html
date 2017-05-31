@@ -1,0 +1,57 @@
+<form name="registerForm">
+  <div class="input-container">
+    <label>Email</label>
+    <input 
+    type="email" 
+    placeholder="email" 
+    ng-model="registerUser.email" 
+    ng-maxlength="255" 
+    required
+    >
+    <span class="require-sign">*</span>
+  </div>
+  <div class="input-container">
+    <label>Username</label>
+    <input 
+    type="text" 
+    placeholder="username" 
+    ng-model="registerUser.username" 
+    ng-maxlength="255" 
+    required
+    >
+    <span class="require-sign">*</span>
+  </div>
+  <div class="input-container">
+    <label>Phone</label>
+    <input 
+    type="number" 
+    placeholder="phone" 
+    ng-model="registerUser.phone" 
+    ng-maxlength="20"
+    >
+  </div>
+  <div class="input-container">
+    <label>Password</label>
+    <input 
+    type="password" 
+    placeholder="password" 
+    ng-model="registerUser.password" 
+    ng-minlength="6" 
+    ng-maxlength="255" 
+    required>
+    <span class="require-sign">*</span>
+  </div>
+  <div class="input-container">
+    <label>Retype password</label>
+    <input 
+    type="password"
+    placeholder="retype password"
+    ng-model="registerUser.retypedpassword"
+    ng-minlength="6" 
+    ng-maxlength="255"
+    required
+    >
+    <span class="require-sign">*</span>
+  </div>
+  <button class="register-submit">Register</button>
+</form>

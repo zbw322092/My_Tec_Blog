@@ -68,8 +68,9 @@ app.controller('IndexCtrl', [
       }
       console.log('login');
       ngDialog.open({
-        template: 'login',
-        plain: true
+        template: '../client/view/login_dialog.html',
+        plain: false,
+        className: 'ngdialog-theme-default login-dialog'
       });
       // var loginSetting = {
       //   method: 'POST',
@@ -113,6 +114,11 @@ app.controller('IndexCtrl', [
 
     $scope.register = function() {
       console.log('register');
+      ngDialog.open({
+        template: '../client/view/register_dialog.html',
+        plain: false,
+        className: 'ngdialog-theme-default register-dialog'
+      });
       // var registerSetting = {
       //   method: 'POST',
       //   url: '/register',
