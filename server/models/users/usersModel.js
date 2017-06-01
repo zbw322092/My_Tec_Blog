@@ -71,11 +71,11 @@ module.exports = {
             message: 'user not exist'
           });
       } else {
-        matchPassword(req.body.password, results[0].password);
+        matchPassword(req.body.password, results[0]);
       }
 
-      function matchPassword(password, hash) {
-        bcrypt.compare(password, hash, function(err, matched) {
+      function matchPassword(password, user) {
+        bcrypt.compare(password, user.password, function(err, matched) {
           if (err) {
             return res
               .status(500)
@@ -86,7 +86,8 @@ module.exports = {
 
           if (matched) {
             // when user login success, set the key to redis
-            req.session.key = req.body.email;
+            delete user.password;
+            req.session.key = user;
             return res
               .status(200)
               .json({
@@ -132,6 +133,19 @@ module.exports = {
         res.status(200).json({ message: 'email is ok' });
       }
     });
+  },
+
+  loginRequired: function(req, res, next) {
+    var user = req.session.key;
+    if (!user) {
+      return res
+        .status(200)
+        .json({
+          message: 'login required',
+          code: '0001'
+        });
+    }
+    next();
   }
 
 

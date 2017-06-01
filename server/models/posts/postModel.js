@@ -3,13 +3,13 @@ var db = require('../../database');
 
 module.exports = {
   createPost: function(req, res) {
-    if (!req.session.key) {
-      return res
-        .status(200)
-        .json({
-          message: 'permission denied'
-        });
-    }
+    // if (!req.session.key) {
+    //   return res
+    //     .status(200)
+    //     .json({
+    //       message: 'permission denied'
+    //     });
+    // }
     db.beginTransaction(function(err) {
       if (err) { throw err; }
       var createTimestamp = 'TB'+ + new Date();
@@ -71,11 +71,6 @@ module.exports = {
             message: 'get post error'
           })
       }
-      
-      results.forEach(function(value, key, array) {
-        console.log('Post: ', value);
-        console.log('Post author: ', value.author);
-      });
 
       return res
         .status(200)

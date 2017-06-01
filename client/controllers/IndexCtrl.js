@@ -72,7 +72,6 @@ app.controller('IndexCtrl', [
       var loginFormData = {};
       loginFormData.email = this.loginForm.email.$modelValue;
       loginFormData.password = this.loginForm.password.$modelValue;
-      console.log(loginFormData);
       var loginSetting = {
         method: 'POST',
         url: '/login',
@@ -200,6 +199,8 @@ app.controller('IndexCtrl', [
           console.log('user exist error: ', err);
         });
     };
+
+    // console.log('useruseruseruser: ', user);
 
 
   }

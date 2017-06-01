@@ -1,15 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var postModel = require('../../models/posts/postModel.js');
+var userModel = require('../../models/users/usersModel.js');
 
-router.get('/posts', function(req, res) {
-  postModel.getAllPost(req, res);
-});
+router.get('/posts', postModel.getAllPost);
 
-router.post('/post', function(req, res) {
-  console.log(req.body);
-  postModel.createPost(req, res);
-});
+router.post('/post', userModel.loginRequired, postModel.createPost);
 
 
 module.exports = router;
