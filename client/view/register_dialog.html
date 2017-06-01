@@ -1,7 +1,9 @@
 <form name="registerForm">
-  <div class="input-container">
+  <div class="input-container" 
+  ng-class="{'has-error': registerForm.email.$invalid && !registerForm.email.$pristine}">
     <label>Email</label>
-    <input 
+    <input
+    class="form-control" 
     type="email" 
     name="email"
     placeholder="email" 
@@ -14,7 +16,8 @@
   </div>
   <div class="input-container">
     <label>Username</label>
-    <input 
+    <input
+    class="form-control" 
     type="text" 
     name="username"
     placeholder="username" 
@@ -27,16 +30,20 @@
   </div>
   <div class="input-container">
     <label>Phone</label>
-    <input 
+    <input
+    class="form-control" 
     type="number" 
+    name="phone"
     placeholder="phone" 
     ng-model="registerUser.phone" 
     ng-maxlength="20"
     >
+    <div class="phone-warning" ng-if="registerForm.phone.$error.maxlength">Phone number is too long</div>
   </div>
   <div class="input-container">
     <label>Password</label>
-    <input 
+    <input
+    class="form-control" 
     type="password" 
     name="password"
     placeholder="password" 
@@ -57,7 +64,8 @@
   </div>
   <div class="input-container">
     <label>Retype password</label>
-    <input 
+    <input
+    class="form-control" 
     type="password"
     name="retypedPassword"
     placeholder="retype password"
@@ -71,5 +79,8 @@
     <div class="password-matched" ng-if="passwordsMatched">Matched!</div>
     <div class="retyped-password-warning" ng-if="registerForm.retypedPassword.$error.required && !registerForm.retypedPassword.$pristine">Please retype the password</div>
   </div>
-  <button class="btn btn-primary register-button">Register</button>
+  <button 
+  class="btn btn-primary register-button"
+  ng-disabled="registerForm.$invalid || !passwordsMatched"
+  ng-click="submitRegisterForm()">Register</button>
 </form>

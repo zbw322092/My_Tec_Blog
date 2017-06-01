@@ -1,9 +1,11 @@
 app.controller('IndexCtrl', [
   '$scope',
+  '$rootScope',
   '$http',
   'ngDialog',
   function(
     $scope,
+    $rootScope,
     $http,
     ngDialog
   ) {
@@ -115,7 +117,7 @@ app.controller('IndexCtrl', [
     $scope.register = function() {
       console.log('register');
       ngDialog.open({
-        template: '../client/view/register_dialog.html',
+        templateUrl: '../client/view/register_dialog.html',
         plain: false,
         scope: $scope,
         className: 'ngdialog-theme-default register-dialog'
@@ -142,9 +144,14 @@ app.controller('IndexCtrl', [
       //   });
     };
 
+    $scope.submitRegisterForm = function() {
+      // ngDialog creates a new child scope, so get data likes $scope.register.email does not working, 
+      // using we can get ng-model value using this.email.
+      console.log(this.registerForm.email.$modelValue);
+    };
+
     // evaluate password strength(week, middle and strong)
     $scope.evaluatePassword = function(password) {
-      console.log(password);
       $scope.showStrengthBar = false;
       var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
       var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
