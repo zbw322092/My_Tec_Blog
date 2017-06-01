@@ -14,7 +14,8 @@
     <span class="require-sign">*</span>
     <div class="email-warning" ng-if="registerForm.email.$invalid && !registerForm.email.$pristine">Please enter an valid email</div>
   </div>
-  <div class="input-container">
+  <div class="input-container"
+  ng-class="{'has-error': registerForm.username.$invalid && !registerForm.username.$pristine}">
     <label>Username</label>
     <input
     class="form-control" 
@@ -28,7 +29,8 @@
     <span class="require-sign">*</span>
     <div class="username-warning" ng-if="registerForm.username.$invalid && !registerForm.username.$pristine">Please enter an valid username</div>
   </div>
-  <div class="input-container">
+  <div class="input-container"
+  ng-class="{'has-error': registerForm.phone.$invalid}">
     <label>Phone</label>
     <input
     class="form-control" 
@@ -40,7 +42,8 @@
     >
     <div class="phone-warning" ng-if="registerForm.phone.$error.maxlength">Phone number is too long</div>
   </div>
-  <div class="input-container">
+  <div class="input-container"
+  ng-class="{'has-error': registerForm.password.$invalid && !registerForm.password.$pristine}">
     <label>Password</label>
     <input
     class="form-control" 
@@ -62,7 +65,8 @@
     <div class="password-warning" ng-if="registerForm.password.$error.maxlength && !registerForm.password.$pristine">Password cannot longer than 255 characters</div>
     <div class="password-warning" ng-if="registerForm.password.$error.required && !registerForm.password.$pristine">Password is required</div>
   </div>
-  <div class="input-container">
+  <div class="input-container"
+  ng-class="{'has-error': registerForm.retypedPassword.$invalid && !registerForm.retypedPassword.$pristine}">
     <label>Retype password</label>
     <input
     class="form-control" 

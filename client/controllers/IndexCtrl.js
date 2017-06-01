@@ -54,45 +54,41 @@ app.controller('IndexCtrl', [
         });
     };
 
-
-    $scope.clickToOpen = function () {
-        ngDialog.open({ 
-          template: 'templateId',
-          className: 'ngdialog-theme-default',
-          // showClose: false
-         });
-    };
-
-    // login
+    // click login icon to open login window
     $scope.login = function(hoverStatus) {
       if (!hoverStatus) {
         return;
       }
-      console.log('login');
       ngDialog.open({
-        template: '../client/view/login_dialog.html',
+        templateUrl: '../client/view/login_dialog.html',
         plain: false,
+        scope: $scope,
         className: 'ngdialog-theme-default login-dialog'
       });
-      // var loginSetting = {
-      //   method: 'POST',
-      //   url: '/login',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   data: {
-      //     email: 'youremail@hotmail.com',
-      //     password: 'yourpassword'
-      //   }
-      // };
+    };
 
-      // $http(loginSetting)
-      //   .then(function(result) {
-      //     console.log('login result: ', result);
-      //   })
-      //   .catch(function(err) {
-      //     console.log('login err: ', err);
-      //   });
+    // submit user login info
+    $scope.submitLoginForm = function() {
+      var loginFormData = {};
+      loginFormData.email = this.loginForm.email.$modelValue;
+      loginFormData.password = this.loginForm.password.$modelValue;
+      console.log(loginFormData);
+      var loginSetting = {
+        method: 'POST',
+        url: '/login',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: loginFormData
+      };
+
+      $http(loginSetting)
+        .then(function(result) {
+          console.log('login result: ', result);
+        })
+        .catch(function(err) {
+          console.log('login err: ', err);
+        });
     };
 
     // logout
@@ -122,32 +118,34 @@ app.controller('IndexCtrl', [
         scope: $scope,
         className: 'ngdialog-theme-default register-dialog'
       });
-      // var registerSetting = {
-      //   method: 'POST',
-      //   url: '/register',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   data: {
-      //     name: 'myname',
-      //     email: 'myemail@hotmail.com',
-      //     phone: '13511111122',
-      //     password: 'mypassword'
-      //   }
-      // }
-      // $http(registerSetting)
-      //   .then(function(result) {
-      //     console.log('sign up result: ', result);
-      //   })
-      //   .catch(function(err) {
-      //     console.log('sign up error: ', err);
-      //   });
     };
 
     $scope.submitRegisterForm = function() {
       // ngDialog creates a new child scope, so get data likes $scope.register.email does not working, 
       // using we can get ng-model value using this.email.
       console.log(this.registerForm.email.$modelValue);
+      var registerFormData = {};
+      registerFormData.email = this.registerForm.email.$modelValue;
+      registerFormData.name = this.registerForm.username.$modelValue;
+      registerFormData.phone = this.registerForm.phone.$modelValue;
+      registerFormData.password = this.registerForm.password.$modelValue;
+      console.log('registerFormData: ', registerFormData);
+
+      var registerSetting = {
+        method: 'POST',
+        url: '/register',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: registerFormData
+      }
+      $http(registerSetting)
+        .then(function(result) {
+          console.log('sign up result: ', result);
+        })
+        .catch(function(err) {
+          console.log('sign up error: ', err);
+        });
     };
 
     // evaluate password strength(week, middle and strong)
@@ -177,7 +175,7 @@ app.controller('IndexCtrl', [
 
     // check whether the retyped password matches previous typed password
     $scope.passwordMatched = function(password, retypedPassword) {
-      if (password === retypedPassword) {
+      if ((password === retypedPassword) && password && retypedPassword) {
         return $scope.passwordsMatched = true;
       }
       return $scope.passwordsMatched = false;

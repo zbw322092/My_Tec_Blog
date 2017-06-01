@@ -1,1 +1,36 @@
-tttttt
+<form name="loginForm">
+  <div class="input-container" 
+  ng-class="{'has-error': loginForm.email.$invalid && !loginForm.email.$pristine}">
+    <label>Email</label>
+    <input
+    class="form-control" 
+    type="email" 
+    name="email"
+    placeholder="email" 
+    ng-model="userLogin.email" 
+    ng-maxlength="255" 
+    required
+    >
+    <div class="email-warning" ng-if="loginForm.email.$invalid && !loginForm.email.$pristine">Please enter an valid email</div>
+  </div>
+
+  <div class="input-container"
+  ng-class="{'has-error': loginForm.password.$invalid && !loginForm.password.$pristine}">
+    <label>Password</label>
+    <input
+    class="form-control" 
+    type="password" 
+    name="password"
+    placeholder="password" 
+    ng-model="userLogin.password" 
+    ng-minlength="6" 
+    ng-maxlength="255" 
+    required>
+    <div class="password-warning" ng-if="loginForm.password.$error.required && !loginForm.password.$pristine">Password is required</div>
+  </div>
+
+  <button 
+  class="btn btn-primary login-button"
+  ng-disabled="loginForm.$invalid"
+  ng-click="submitLoginForm()">Login</button>
+</form>
