@@ -14,7 +14,7 @@ var routers = require('./server/routers.js');
 // create redis client
 var redisClient = redis.createClient();
 
-// app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname)));
 app.use(bodyParser.json());
 app.use(session({
   secret: 'tec blog',
@@ -44,7 +44,7 @@ app.set('views', path.join(__dirname, 'server/views/'));
 
 
 app.use(function(req, res, next) {
-  app.locals.user = req.session.key || null;
+  app.locals.loginStatus = req.session.key ? true : false;
   console.log('req.param.url: ', req.url);
   console.log('app.locals: ', app.locals.user);
   next();
