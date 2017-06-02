@@ -45,8 +45,6 @@ app.set('views', path.join(__dirname, 'server/views/'));
 
 app.use(function(req, res, next) {
   app.locals.loginStatus = req.session.key ? true : false;
-  console.log('req.param.url: ', req.url);
-  console.log('app.locals: ', app.locals.user);
   next();
 });
 

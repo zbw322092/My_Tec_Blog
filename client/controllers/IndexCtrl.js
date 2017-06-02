@@ -10,6 +10,10 @@ app.controller('IndexCtrl', [
     ngDialog
   ) {
 
+    console.log('window.GLOBAL.loginStatus: ', window.GLOBAL.loginStatus);
+
+    $scope.loginStatus = window.GLOBAL.loginStatus;
+
     var getPostSetting = {
       method: 'GET',
       url: '/posts'
@@ -55,11 +59,12 @@ app.controller('IndexCtrl', [
     };
 
     // click login icon to open login window
+    var loginDialog;
     $scope.login = function(hoverStatus) {
       if (!hoverStatus) {
         return;
       }
-      ngDialog.open({
+      loginDialog = ngDialog.open({
         templateUrl: '../client/view/login_dialog.html',
         plain: false,
         scope: $scope,
@@ -84,6 +89,10 @@ app.controller('IndexCtrl', [
       $http(loginSetting)
         .then(function(result) {
           console.log('login result: ', result);
+          loginDialog.close();
+          loginDialog.closePromise.then(function() {
+            window.location.reload();
+          });
         })
         .catch(function(err) {
           console.log('login err: ', err);
