@@ -91,7 +91,11 @@ module.exports = {
             return res
               .status(200)
               .json({
-                message: 'login successfully'
+                code: '0000',
+                message: 'login successfully',
+                data: {
+                  loginedUser: user
+                }
               });
           } else {
             return res
@@ -111,7 +115,11 @@ module.exports = {
         return res
         .status(500)
         .json({
-          message: 'logout failed'
+          code: '0000',
+          message: 'logout failed',
+          data: {
+            loginedUser: null
+          }
         });
       }
 

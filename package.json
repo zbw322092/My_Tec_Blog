@@ -21,7 +21,9 @@
     "body-parser": "^1.17.2",
     "connect-redis": "^3.3.0",
     "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
     "express-session": "^1.15.3",
+    "handlebars-helpers": "^0.8.2",
     "mysql": "^2.13.0",
     "redis": "^2.7.1"
   }
