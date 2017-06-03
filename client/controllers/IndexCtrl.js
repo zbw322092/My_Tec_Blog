@@ -1,11 +1,9 @@
 app.controller('IndexCtrl', [
   '$scope',
-  '$rootScope',
   '$http',
   'ngDialog',
   function(
     $scope,
-    $rootScope,
     $http,
     ngDialog
   ) {
@@ -60,9 +58,9 @@ app.controller('IndexCtrl', [
 
     // click login icon to open login window
     var loginDialog;
-    $scope.login = function(hoverStatus) {
-      if (!hoverStatus) {
-        return;
+    $scope.login = function(status) {
+      if (status) {
+        return console.log('log outttttttt');
       }
       loginDialog = ngDialog.open({
         templateUrl: '../client/view/login_dialog.html',

@@ -9,6 +9,11 @@ app.config(function($stateProvider, $locationProvider) {
       url: '',
       controller: 'IndexCtrl',
       templateUrl: '/client/view/index.html'
+    })
+    .state('user', {
+      url: '/user',
+      controller: 'UserCtrl',
+      templateUrl: '/client/view/user.html'
     });
 
 });

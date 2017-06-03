@@ -11,8 +11,11 @@
 
   </section>
 
-  <div class="login-and-register" ng-class="{'login-and-register-on-hover': showTwoIcons}" ng-mousemove="showTwoIcons = true" ng-mouseleave="showTwoIcons = false">
-    <div class="login-icon" ng-click="login(showTwoIcons)"></div>
+  <div class="login-and-register" 
+  ng-class="{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}" 
+  ng-mousemove="showTwoIcons = (true && !loginStatus)" 
+  ng-mouseleave="showTwoIcons = false">
+    <div class="login-icon" ng-click="login(loginStatus)"></div>
     <div class="icon-separater" ng-if="showTwoIcons"></div>
     <div class="register-icon" ng-if="showTwoIcons" ng-click="register()"></div>
   </div>
