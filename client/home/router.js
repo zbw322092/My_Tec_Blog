@@ -8,12 +8,12 @@ app.config(function($stateProvider, $locationProvider) {
     .state('index', {
       url: '',
       controller: 'IndexCtrl',
-      templateUrl: '/client/view/index.html'
+      templateUrl: './client/home/view/index.html'
     })
     .state('user', {
       url: '/user',
       controller: 'UserCtrl',
-      templateUrl: '/client/view/user.html'
+      templateUrl: './client/home/view/user.html'
     });
 
 });

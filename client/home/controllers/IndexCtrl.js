@@ -63,7 +63,7 @@ app.controller('IndexCtrl', [
         return console.log('log outttttttt');
       }
       loginDialog = ngDialog.open({
-        templateUrl: '../client/view/login_dialog.html',
+        templateUrl: '../client/home/view/login_dialog.html',
         plain: false,
         scope: $scope,
         className: 'ngdialog-theme-default login-dialog'
@@ -119,7 +119,7 @@ app.controller('IndexCtrl', [
     $scope.register = function() {
       console.log('register');
       ngDialog.open({
-        templateUrl: '../client/view/register_dialog.html',
+        templateUrl: '../client/home/view/register_dialog.html',
         plain: false,
         scope: $scope,
         className: 'ngdialog-theme-default register-dialog'

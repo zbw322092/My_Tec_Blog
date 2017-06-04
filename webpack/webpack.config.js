@@ -8,8 +8,20 @@ const config = {
   },
   module: {
     rules: [
-      { test: /\.(png|jpg|gif)$/, use: ["file-loader"] },
-      { test: /\.html$/, use: ["html-loader"] },
+      { test: /\.(png|jpg|gif)$/, use: [{ 
+        loader: "file-loader",
+        options: {
+          name: `[path][name].[ext]`
+        }
+      }] },
+      { test: /\.html$/, use: [{
+        loader: "ngtemplate-loader",
+        options: {
+          relativeTo: process.cwd()
+        }
+      },{
+        loader: "html-loader"
+      }] },
       { test: /\.(less|css)$/, use: [{
         loader: "style-loader"
       }, {
