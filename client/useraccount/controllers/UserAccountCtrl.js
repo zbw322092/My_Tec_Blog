@@ -1,4 +1,4 @@
-app.controller('UserCtrl', [
+app.controller('UserAccountCtrl', [
   '$scope',
   '$http',
   'ngDialog',
