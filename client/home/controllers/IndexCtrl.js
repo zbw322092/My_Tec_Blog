@@ -14,7 +14,7 @@ app.controller('IndexCtrl', [
 
     var getPostSetting = {
       method: 'GET',
-      url: '/posts'
+      url: '/api/post/posts'
     };
     $http(getPostSetting)
       .then(function(result) {
@@ -36,7 +36,7 @@ app.controller('IndexCtrl', [
     $scope.submitPost = function() {
       var createPostSetting = {
         method: 'POST',
-        url: '/post',
+        url: '/api/post/post',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -77,7 +77,7 @@ app.controller('IndexCtrl', [
       loginFormData.password = this.loginForm.password.$modelValue;
       var loginSetting = {
         method: 'POST',
-        url: '/login',
+        url: '/api/user/login',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -101,7 +101,7 @@ app.controller('IndexCtrl', [
     $scope.logout = function() {
       var logoutSetting = {
         method: 'GET',
-        url: '/logout',
+        url: '/api/user/logout',
         headers: {
           'Content-Type': 'application/json'
         }
@@ -139,7 +139,7 @@ app.controller('IndexCtrl', [
 
       var registerSetting = {
         method: 'POST',
-        url: '/register',
+        url: '/api/user/register',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -190,7 +190,7 @@ app.controller('IndexCtrl', [
     $scope.userExist = function() {
       var userExistSetting = {
         method: 'POST',
-        url: '/user_exist',
+        url: '/api/user/user_exist',
         headers: {
           'Content-Type': 'application/json'
         },

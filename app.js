@@ -54,16 +54,4 @@ app.listen(port, function() {
   console.log('Express Server is Listening on Port ', port);
 });
 
-app.get('/home', function(req,res) {
-  res.render('common/index', {
-    moduleName: 'home'
-  });
-});
-
-app.get('/useraccount', function(req,res) {
-  res.render('common/index', {
-    moduleName: 'useraccount'
-  });
-});
-
 module.exports = app;
