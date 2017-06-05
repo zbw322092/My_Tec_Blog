@@ -6,8 +6,9 @@ const config = {
     useraccount: './client/useraccount/index.js'
   },
   output: {
-    path: path.resolve(__dirname, '../public/[name]'),
-    filename: '[name].bundle.js'
+    path: path.resolve(__dirname, '../public/'),
+    filename: './[name]/bundle.js',
+    publicPath: 'http://localhost:8889/public/'
   },
   module: {
     rules: [

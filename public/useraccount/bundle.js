@@ -60,10 +60,10 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "http://localhost:8889/public/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -320,10 +320,10 @@ function insertStyleElement (options, style) {
 }
 
 function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
 	style.parentNode.removeChild(style);
 
 	var idx = stylesInsertedAtTop.indexOf(style);
+
 	if(idx >= 0) {
 		stylesInsertedAtTop.splice(idx, 1);
 	}
@@ -1899,19 +1899,18 @@ module.exports = g;
 
 
 /***/ }),
-/* 21 */
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "client/home/assets/login_or_register.png";
+__webpack_require__(32);
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(30);
-
-/***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports) {
 
 app.config(function($stateProvider, $locationProvider) {
@@ -1921,43 +1920,32 @@ app.config(function($stateProvider, $locationProvider) {
   $stateProvider
     .state('index', {
       url: '',
-      controller: 'IndexCtrl',
-      templateUrl: './client/home/view/index.html'
-    })
-    .state('user', {
-      url: '/user',
-      controller: 'UserCtrl',
-      templateUrl: './client/home/view/user.html'
+      controller: 'UserAccountCtrl',
+      templateUrl: './client/useraccount/view/user_account.html'
     });
 
 });
 
 /***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(45);
-__webpack_require__(46);
-__webpack_require__(47);
-__webpack_require__(48);
+__webpack_require__(49);
+__webpack_require__(50);
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(41);
-__webpack_require__(42);
-__webpack_require__(43);
+__webpack_require__(44);
 
 /***/ }),
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */
+/* 30 */,
+/* 31 */,
+/* 32 */
 /***/ (function(module, exports) {
 
-app.controller('IndexCtrl', [
+app.controller('UserAccountCtrl', [
   '$scope',
   '$http',
   'ngDialog',
@@ -1967,206 +1955,7 @@ app.controller('IndexCtrl', [
     ngDialog
   ) {
 
-    console.log('window.GLOBAL.loginStatus: ', window.GLOBAL.loginStatus);
-
-    $scope.loginStatus = window.GLOBAL.loginStatus;
-
-    var getPostSetting = {
-      method: 'GET',
-      url: '/posts'
-    };
-    $http(getPostSetting)
-      .then(function(result) {
-        var responseData = result.data.data;
-        console.log('result: ', result.data.data);
-        initiPage(responseData);
-      })
-      .catch(function(err) {
-        console.log('err: ', err);
-      });
-
-    function initiPage(result) {
-      $scope.posts = result;
-    }
-
-
-
-    // submit post
-    $scope.submitPost = function() {
-      var createPostSetting = {
-        method: 'POST',
-        url: '/post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          postTitle: $scope.postTitle,
-          author: $scope.postAuthor,
-          content: $scope.postContent
-        }
-      };
-
-      $http(createPostSetting)
-        .then(function(result) {
-          console.log('post result: ', result);
-        })
-        .catch(function(err) {
-          console.log('post err: ', err);
-        });
-    };
-
-    // click login icon to open login window
-    var loginDialog;
-    $scope.login = function(status) {
-      if (status) {
-        return console.log('log outttttttt');
-      }
-      loginDialog = ngDialog.open({
-        templateUrl: '../client/home/view/login_dialog.html',
-        plain: false,
-        scope: $scope,
-        className: 'ngdialog-theme-default login-dialog'
-      });
-    };
-
-    // submit user login info
-    $scope.submitLoginForm = function() {
-      var loginFormData = {};
-      loginFormData.email = this.loginForm.email.$modelValue;
-      loginFormData.password = this.loginForm.password.$modelValue;
-      var loginSetting = {
-        method: 'POST',
-        url: '/login',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: loginFormData
-      };
-
-      $http(loginSetting)
-        .then(function(result) {
-          console.log('login result: ', result);
-          loginDialog.close();
-          loginDialog.closePromise.then(function() {
-            window.location.reload();
-          });
-        })
-        .catch(function(err) {
-          console.log('login err: ', err);
-        });
-    };
-
-    // logout
-    $scope.logout = function() {
-      var logoutSetting = {
-        method: 'GET',
-        url: '/logout',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-
-      $http(logoutSetting)
-        .then(function(result) {
-          console.log('logout result: ', result);
-        })
-        .catch(function(err) {
-          console.log('logout err: ', err);
-        });
-    };
-
-    $scope.register = function() {
-      console.log('register');
-      ngDialog.open({
-        templateUrl: '../client/home/view/register_dialog.html',
-        plain: false,
-        scope: $scope,
-        className: 'ngdialog-theme-default register-dialog'
-      });
-    };
-
-    $scope.submitRegisterForm = function() {
-      // ngDialog creates a new child scope, so get data likes $scope.register.email does not working, 
-      // using we can get ng-model value using this.email.
-      console.log(this.registerForm.email.$modelValue);
-      var registerFormData = {};
-      registerFormData.email = this.registerForm.email.$modelValue;
-      registerFormData.name = this.registerForm.username.$modelValue;
-      registerFormData.phone = this.registerForm.phone.$modelValue;
-      registerFormData.password = this.registerForm.password.$modelValue;
-      console.log('registerFormData: ', registerFormData);
-
-      var registerSetting = {
-        method: 'POST',
-        url: '/register',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: registerFormData
-      }
-      $http(registerSetting)
-        .then(function(result) {
-          console.log('sign up result: ', result);
-        })
-        .catch(function(err) {
-          console.log('sign up error: ', err);
-        });
-    };
-
-    // evaluate password strength(week, middle and strong)
-    $scope.evaluatePassword = function(password) {
-      $scope.showStrengthBar = false;
-      var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-      var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-      if (!password || password.length < 6 || password.length > 255) {
-        return $scope.showStrengthBar = false;
-      } else if (strongRegex.test(password)) {
-        $scope.showStrengthBar = true;
-        $scope.weekLevel = true;
-        $scope.middleLevel = true;
-        $scope.strongLevel = true;
-      } else if (mediumRegex.test(password)) {
-        $scope.showStrengthBar = true;
-        $scope.weekLevel = true;
-        $scope.middleLevel = true;
-        $scope.strongLevel = false;
-      } else {
-        $scope.showStrengthBar = true;
-        $scope.weekLevel = true;
-        $scope.middleLevel = false;
-        $scope.strongLevel = false;
-      }
-    };
-
-    // check whether the retyped password matches previous typed password
-    $scope.passwordMatched = function(password, retypedPassword) {
-      if ((password === retypedPassword) && password && retypedPassword) {
-        return $scope.passwordsMatched = true;
-      }
-      return $scope.passwordsMatched = false;
-    };
-
-    $scope.userExist = function() {
-      var userExistSetting = {
-        method: 'POST',
-        url: '/user_exist',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          email: 'youremail@hotmail.com'
-        }
-      }
-      $http(userExistSetting)
-        .then(function(result) {
-          console.log('user exist result: ', result);
-        })
-        .catch(function(err) {
-          console.log('user exist error: ', err);
-        });
-    };
-
-    // console.log('useruseruseruser: ', user);
+    $scope.userName = 'bbbbb';
 
 
   }
@@ -2174,7 +1963,7 @@ app.controller('IndexCtrl', [
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('my_tec_blog', ['ui.router', 'ngDialog']);
@@ -2184,15 +1973,17 @@ __webpack_require__(4);
 __webpack_require__(2);
 __webpack_require__(3);
 
-__webpack_require__(23);
-__webpack_require__(22);
-__webpack_require__(24);
-__webpack_require__(25);
+__webpack_require__(27);
+__webpack_require__(26);
+__webpack_require__(28);
+__webpack_require__(29);
 
 /***/ }),
-/* 32 */,
-/* 33 */,
-/* 34 */
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -2206,7 +1997,7 @@ exports.push([module.i, "", ""]);
 
 
 /***/ }),
-/* 35 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -2214,83 +2005,36 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  margin: 0 !important;\n}\n.main-page .single-post {\n  padding-top: 20px;\n  width: 70%;\n  margin-left: auto;\n  margin-right: auto;\n}\n.main-page .single-post .post-title {\n  font-size: 24px;\n  font-weight: bold;\n}\n.main-page .single-post .post-author {\n  display: block;\n  margin-top: 15px;\n}\n.main-page .single-post .post-author .create-time {\n  margin-left: 15px;\n}\n.main-page .single-post .post-content {\n  margin-bottom: 0 !important;\n  padding-bottom: 20px;\n  word-break: break-all;\n  border-bottom: 1px solid #e4e4e4;\n}\n.main-page .login-or-register {\n  position: absolute;\n  width: 50px;\n  height: 50px;\n  background: url(" + __webpack_require__(21) + ") 0 0 no-repeat;\n  background-size: 100% 100%;\n  right: 50px;\n  top: 20px;\n}\n.main-page .login-and-register-on-hover {\n  right: 15px !important;\n}\n.main-page .login-and-register-on-hover .icon-separater {\n  display: inline-block !important;\n}\n.main-page .login-and-register-on-hover .register-icon {\n  display: inline-block !important;\n}\n.main-page .login-status-icon {\n  background: #7caeff;\n  border-radius: 50%;\n}\n.main-page .login-and-register {\n  position: absolute;\n  height: 50px;\n  right: 49px;\n  top: 20px;\n}\n.main-page .login-and-register .login-icon {\n  display: inline-block;\n  width: 50px;\n  height: 50px;\n  background: url(" + __webpack_require__(21) + ") 0 0 no-repeat;\n  background-size: 100% 100%;\n  float: left;\n}\n.main-page .login-and-register .icon-separater {\n  display: none;\n  width: 1px;\n  height: 35px;\n  border-right: 2px solid #000000;\n  margin-left: 9px;\n  margin-right: 9px;\n  margin-top: 7.5px;\n}\n.main-page .login-and-register .register-icon {\n  display: none;\n  width: 50px;\n  height: 50px;\n  background: url(" + __webpack_require__(40) + ") 0 0 no-repeat;\n  background-size: 100% 100%;\n  float: right;\n}\n", ""]);
+exports.push([module.i, "body {\n  margin: 0 !important;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".login-dialog .ngdialog-close {\n  padding: 0 !important;\n  border: none !important;\n}\n.login-dialog .ngdialog-content {\n  width: 400px !important;\n  background: #ffffff !important;\n}\n.login-dialog input[type=number]::-webkit-inner-spin-button,\n.login-dialog input[type=number]::-webkit-outer-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.login-dialog input[type=number] {\n  -moz-appearance: textfield;\n}\n.login-dialog .input-container {\n  position: relative;\n  min-height: 40px;\n  line-height: 40px;\n  margin-top: 8px;\n  font-size: 14px;\n}\n.login-dialog .input-container input {\n  position: absolute;\n  width: 200px;\n  height: 30px;\n  left: 130px;\n  font-size: 14px;\n  margin-top: 5px;\n}\n.login-dialog .email-warning,\n.login-dialog .password-warning {\n  position: relative;\n  left: 130px;\n  color: #a94442;\n  font-size: 12px;\n  line-height: 150%;\n}\n.login-dialog .login-button {\n  position: relative;\n  left: 269px;\n  margin-top: 20px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".register-dialog .ngdialog-close {\n  padding: 0 !important;\n  border: none !important;\n}\n.register-dialog .ngdialog-content {\n  width: 400px !important;\n  background: #ffffff !important;\n}\n.register-dialog input[type=number]::-webkit-inner-spin-button,\n.register-dialog input[type=number]::-webkit-outer-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.register-dialog input[type=number] {\n  -moz-appearance: textfield;\n}\n.register-dialog .input-container {\n  position: relative;\n  min-height: 40px;\n  line-height: 40px;\n  margin-top: 8px;\n  font-size: 14px;\n}\n.register-dialog .input-container input {\n  position: absolute;\n  width: 200px;\n  height: 30px;\n  left: 130px;\n  font-size: 14px;\n  margin-top: 5px;\n}\n.register-dialog .input-container .require-sign {\n  position: absolute;\n  left: 340px;\n}\n.register-dialog .password-strength {\n  position: relative;\n  width: 200px;\n  height: 10px;\n  left: 130px;\n}\n.register-dialog .password-strength .weak-password {\n  display: inline-block;\n  width: 33%;\n  height: 100%;\n  background: red;\n  float: left;\n  text-align: center;\n  font-size: 12px;\n  color: #555555;\n}\n.register-dialog .password-strength .middle-password {\n  display: inline-block;\n  width: 33%;\n  height: 100%;\n  background: #f4c842;\n  float: left;\n  text-align: center;\n  font-size: 12px;\n  color: #555555;\n}\n.register-dialog .password-strength .strong-password {\n  display: inline-block;\n  width: 33%;\n  height: 100%;\n  background: green;\n  float: left;\n  text-align: center;\n  font-size: 12px;\n  color: #555555;\n}\n.register-dialog .email-warning,\n.register-dialog .password-warning,\n.register-dialog .phone-warning,\n.register-dialog .retyped-password-warning,\n.register-dialog .username-warning {\n  position: relative;\n  left: 130px;\n  color: #a94442;\n  font-size: 12px;\n  line-height: 150%;\n}\n.register-dialog .password-matched {\n  position: relative;\n  left: 130px;\n  color: green;\n  font-size: 12px;\n  line-height: 150%;\n}\n.register-dialog .register-button {\n  position: relative;\n  left: 250px;\n  margin-top: 20px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 38 */,
-/* 39 */,
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "client/home/assets/register.png";
-
-/***/ }),
-/* 41 */
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */
 /***/ (function(module, exports) {
 
-var path = '/client/home/view/index.html';
-var html = "<div>login status: <span ng-bind=\"loginStatus\"></span></div>\n<div class=\"main-page\">\n  <section class=\"single-post\" ng-repeat=\"post in posts\">\n\n    <div class=\"post-title\" ng-bind=\"post.post_title\"></div>\n    <em class=\"post-author\">\n      <span class=\"author-name\" ng-bind=\"post.author\"></span>\n      <span class=\"create-time\" ng-bind=\"post.created\"></span></em>\n    <p class=\"post-content\" ng-bind=\"post.post_content\"></p>\n\n\n  </section>\n\n  <div class=\"login-and-register\" \n  ng-class=\"{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}\" \n  ng-mousemove=\"showTwoIcons = (true && !loginStatus)\" \n  ng-mouseleave=\"showTwoIcons = false\">\n    <div class=\"login-icon\" ng-click=\"login(loginStatus)\"></div>\n    <div class=\"icon-separater\" ng-if=\"showTwoIcons\"></div>\n    <div class=\"register-icon\" ng-if=\"showTwoIcons\" ng-click=\"register()\"></div>\n  </div>\n\n  <!--<button class=\"login\" ng-click=\"login()\">Login</button>\n  <button class=\"sign-up\" ng-click=\"signUp()\">Sign Up</button>\n  <button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n  <button class=\"user-exist\" ng-click=\"userExist()\">User Exist</button>-->\n</div>\n\n<button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n<form>\n  <input placeholder=\"title\" ng-model=\"postTitle\">\n  <input placeholder=\"author\" ng-model=\"postAuthor\">\n  <textarea placeholder=\"article content\" ng-model=\"postContent\"></textarea>\n</form>\n<button ng-click=\"submitPost()\">CLICK TO SUBMIT</button>";
+var path = '/client/useraccount/view/user_account.html';
+var html = "<div class=\"useraccount\">\n  <div ng-bind=\"userName\"></div>\n</div>";
 window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 module.exports = path;
 
 /***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-var path = '/client/home/view/login_dialog.html';
-var html = "<form name=\"loginForm\">\n  <div class=\"input-container\" \n  ng-class=\"{'has-error': loginForm.email.$invalid && !loginForm.email.$pristine}\">\n    <label>Email</label>\n    <input\n    class=\"form-control\" \n    type=\"email\" \n    name=\"email\"\n    placeholder=\"email\" \n    ng-model=\"userLogin.email\" \n    ng-maxlength=\"255\" \n    required\n    >\n    <div class=\"email-warning\" ng-if=\"loginForm.email.$invalid && !loginForm.email.$pristine\">Please enter an valid email</div>\n  </div>\n\n  <div class=\"input-container\"\n  ng-class=\"{'has-error': loginForm.password.$invalid && !loginForm.password.$pristine}\">\n    <label>Password</label>\n    <input\n    class=\"form-control\" \n    type=\"password\" \n    name=\"password\"\n    placeholder=\"password\" \n    ng-model=\"userLogin.password\" \n    ng-minlength=\"6\" \n    ng-maxlength=\"255\" \n    required>\n    <div class=\"password-warning\" ng-if=\"loginForm.password.$error.required && !loginForm.password.$pristine\">Password is required</div>\n  </div>\n\n  <button \n  class=\"btn btn-primary login-button\"\n  ng-disabled=\"loginForm.$invalid\"\n  ng-click=\"submitLoginForm()\">Login</button>\n</form>\n";
-window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
-module.exports = path;
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports) {
-
-var path = '/client/home/view/register_dialog.html';
-var html = "<form name=\"registerForm\">\n  <div class=\"input-container\" \n  ng-class=\"{'has-error': registerForm.email.$invalid && !registerForm.email.$pristine}\">\n    <label>Email</label>\n    <input\n    class=\"form-control\" \n    type=\"email\" \n    name=\"email\"\n    placeholder=\"email\" \n    ng-model=\"registerUser.email\" \n    ng-maxlength=\"255\" \n    required\n    >\n    <span class=\"require-sign\">*</span>\n    <div class=\"email-warning\" ng-if=\"registerForm.email.$invalid && !registerForm.email.$pristine\">Please enter an valid email</div>\n  </div>\n  <div class=\"input-container\"\n  ng-class=\"{'has-error': registerForm.username.$invalid && !registerForm.username.$pristine}\">\n    <label>Username</label>\n    <input\n    class=\"form-control\" \n    type=\"text\" \n    name=\"username\"\n    placeholder=\"username\" \n    ng-model=\"registerUser.username\" \n    ng-maxlength=\"255\" \n    required\n    >\n    <span class=\"require-sign\">*</span>\n    <div class=\"username-warning\" ng-if=\"registerForm.username.$invalid && !registerForm.username.$pristine\">Please enter an valid username</div>\n  </div>\n  <div class=\"input-container\"\n  ng-class=\"{'has-error': registerForm.phone.$invalid}\">\n    <label>Phone</label>\n    <input\n    class=\"form-control\" \n    type=\"number\" \n    name=\"phone\"\n    placeholder=\"phone\" \n    ng-model=\"registerUser.phone\" \n    ng-maxlength=\"20\"\n    >\n    <div class=\"phone-warning\" ng-if=\"registerForm.phone.$error.maxlength\">Phone number is too long</div>\n  </div>\n  <div class=\"input-container\"\n  ng-class=\"{'has-error': registerForm.password.$invalid && !registerForm.password.$pristine}\">\n    <label>Password</label>\n    <input\n    class=\"form-control\" \n    type=\"password\" \n    name=\"password\"\n    placeholder=\"password\" \n    ng-model=\"registerUser.password\" \n    ng-minlength=\"6\" \n    ng-maxlength=\"255\" \n    ng-change=\"evaluatePassword(registerUser.password)\"\n    required>\n    <span class=\"require-sign\">*</span>\n    <div class=\"password-strength\" ng-if=\"showStrengthBar\">\n      <span class=\"weak-password\" ng-show=\"weekLevel\"></span>\n      <span class=\"middle-password\" ng-show=\"middleLevel\"></span>\n      <span class=\"strong-password\" ng-show=\"strongLevel\"></span>\n    </div>\n    <div class=\"password-warning\" ng-if=\"registerForm.password.$error.minlength && !registerForm.password.$error.required && !registerForm.password.$pristine\">Password cannot shorter than 6 characters</div>\n    <div class=\"password-warning\" ng-if=\"registerForm.password.$error.maxlength && !registerForm.password.$pristine\">Password cannot longer than 255 characters</div>\n    <div class=\"password-warning\" ng-if=\"registerForm.password.$error.required && !registerForm.password.$pristine\">Password is required</div>\n  </div>\n  <div class=\"input-container\"\n  ng-class=\"{'has-error': registerForm.retypedPassword.$invalid && !registerForm.retypedPassword.$pristine}\">\n    <label>Retype password</label>\n    <input\n    class=\"form-control\" \n    type=\"password\"\n    name=\"retypedPassword\"\n    placeholder=\"retype password\"\n    ng-model=\"registerUser.retypedpassword\"\n    ng-minlength=\"6\" \n    ng-maxlength=\"255\"\n    ng-change=\"passwordMatched(registerUser.password, registerUser.retypedpassword)\"\n    required\n    >\n    <span class=\"require-sign\">*</span>\n    <div class=\"password-matched\" ng-if=\"passwordsMatched\">Matched!</div>\n    <div class=\"retyped-password-warning\" ng-if=\"registerForm.retypedPassword.$error.required && !registerForm.retypedPassword.$pristine\">Please retype the password</div>\n  </div>\n  <button \n  class=\"btn btn-primary register-button\"\n  ng-disabled=\"registerForm.$invalid || !passwordsMatched\"\n  ng-click=\"submitRegisterForm()\">Register</button>\n</form>\n";
-window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
-module.exports = path;
-
-/***/ }),
-/* 44 */,
-/* 45 */
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(34);
+var content = __webpack_require__(38);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -2315,13 +2059,13 @@ if(false) {
 }
 
 /***/ }),
-/* 46 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(35);
+var content = __webpack_require__(39);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -2335,70 +2079,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./index.less", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./index.less");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(36);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./login.dialog.less", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./login.dialog.less");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(37);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./register.dialog.less", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./register.dialog.less");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./user.account.less", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/less-loader/dist/index.js!./user.account.less");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});

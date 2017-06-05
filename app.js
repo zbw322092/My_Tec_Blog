@@ -55,11 +55,15 @@ app.listen(port, function() {
 });
 
 app.get('/home', function(req,res) {
-  res.render('common/index');
+  res.render('common/index', {
+    moduleName: 'home'
+  });
 });
 
 app.get('/useraccount', function(req,res) {
-  res.render('common/index');
+  res.render('common/index', {
+    moduleName: 'useraccount'
+  });
 });
 
 module.exports = app;
