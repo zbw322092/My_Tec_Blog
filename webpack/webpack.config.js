@@ -1,10 +1,13 @@
 var path = require('path');
 
 const config = {
-  entry: './client/home/index.js',
+  entry: {
+    home: './client/home/index.js',
+    useraccount: './client/useraccount/index.js'
+  },
   output: {
-    path: path.resolve(__dirname, '../public/home'),
-    filename: 'home.bundle.js'
+    path: path.resolve(__dirname, '../public/[name]'),
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
