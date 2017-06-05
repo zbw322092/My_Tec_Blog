@@ -57,7 +57,6 @@ module.exports = {
             message: 'login error'
           });
       }
-      console.log(results);
       if (results.length > 1) {
         res
           .status(500)
@@ -148,6 +147,31 @@ module.exports = {
         });
     }
     next();
+  },
+
+  basicInfo: function(req, res, next) {
+    var email = req.session.key['email'];
+    var name = req.session.key['name'];
+
+    var sql = 'SELECT post_title FROM blogs WHERE author = ?';
+    var inserts = [name];
+    sql = mysql.format(sql, inserts);
+
+    db.query(sql, function(error, results, fields) {
+      if (error) {
+        return res.status(500).json({ mesaage: 'query failed' });
+      }
+      res.status(200)
+        .json({
+          message: 'success',
+          code: '0000',
+          data: {
+            username: name,
+            posts: results
+          }
+        });
+    });
+
   }
 
 

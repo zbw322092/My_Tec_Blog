@@ -10,4 +10,6 @@ router.get('/logout', usersModel.logout);
 
 router.post('/user_exist', usersModel.userExist);
 
+router.get('/basic_info', usersModel.basicInfo);
+
 module.exports = router;

@@ -1955,7 +1955,24 @@ app.controller('UserAccountCtrl', [
     ngDialog
   ) {
 
-    $scope.userName = 'bbbbb';
+    initPage();
+    function initPage() {
+      var getUserDataSetting = {
+        method: 'GET',
+        url: '/api/user/basic_info'
+      };
+
+      $http(getUserDataSetting)
+        .then(function(result) {
+          var data = result.data.data || {};
+          console.log('data: ', result);
+          $scope.username = data.username;
+          $scope.posts = data.posts;
+        })
+        .catch(function(err) {
+          console.log('err: ', err);
+        });
+    }
 
 
   }
@@ -2019,7 +2036,7 @@ exports.push([module.i, "body {\n  margin: 0 !important;\n}\n", ""]);
 /***/ (function(module, exports) {
 
 var path = '/client/useraccount/view/user_account.html';
-var html = "<div class=\"useraccount\">\n  <div ng-bind=\"userName\"></div>\n</div>";
+var html = "<div class=\"useraccount\">\n  <div>Welcome, <span ng-bind=\"username\"></span></div>\n\n  The Articles Posted By You:\n  <div ng-repeat=\"post in posts\">\n    <span ng-bind=\"post.post_title\"></span>\n  </div>\n\n</div>";
 window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 module.exports = path;
 

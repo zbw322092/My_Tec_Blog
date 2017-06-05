@@ -1,3 +1,9 @@
 <div class="useraccount">
-  <div ng-bind="userName"></div>
+  <div>Welcome, <span ng-bind="username"></span></div>
+
+  The Articles Posted By You:
+  <div ng-repeat="post in posts">
+    <span ng-bind="post.post_title"></span>
+  </div>
+
 </div>

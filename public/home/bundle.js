@@ -2019,7 +2019,7 @@ app.controller('IndexCtrl', [
     var loginDialog;
     $scope.login = function(status) {
       if (status) {
-        return console.log('log outttttttt');
+        window.location.href = 'http://localhost:8889/useraccount';
       }
       loginDialog = ngDialog.open({
         templateUrl: '../client/home/view/login_dialog.html',
