@@ -320,10 +320,10 @@ function insertStyleElement (options, style) {
 }
 
 function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
 	style.parentNode.removeChild(style);
 
 	var idx = stylesInsertedAtTop.indexOf(style);
-
 	if(idx >= 0) {
 		stylesInsertedAtTop.splice(idx, 1);
 	}
@@ -1975,6 +1975,50 @@ app.controller('UserAccountCtrl', [
     }
 
 
+    // logout
+    $scope.logout = function() {
+      var logoutSetting = {
+        method: 'GET',
+        url: '/api/user/logout',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      $http(logoutSetting)
+        .then(function(result) {
+          console.log('logout result: ', result);
+        })
+        .catch(function(err) {
+          console.log('logout err: ', err);
+        });
+    };
+
+
+    // submit post
+    $scope.submitPost = function() {
+      var createPostSetting = {
+        method: 'POST',
+        url: '/api/post/post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          postTitle: $scope.postTitle,
+          content: $scope.postContent
+        }
+      };
+
+      $http(createPostSetting)
+        .then(function(result) {
+          console.log('post result: ', result);
+        })
+        .catch(function(err) {
+          console.log('post err: ', err);
+        });
+    };
+
+
   }
 ]);
 
@@ -2036,7 +2080,7 @@ exports.push([module.i, "body {\n  margin: 0 !important;\n}\n", ""]);
 /***/ (function(module, exports) {
 
 var path = '/client/useraccount/view/user_account.html';
-var html = "<div class=\"useraccount\">\n  <div>Welcome, <span ng-bind=\"username\"></span></div>\n\n  The Articles Posted By You:\n  <div ng-repeat=\"post in posts\">\n    <span ng-bind=\"post.post_title\"></span>\n  </div>\n\n</div>";
+var html = "<div class=\"useraccount\">\n  <div>Welcome, <span ng-bind=\"username\"></span></div>\n\n  The Articles Posted By You:\n  <div ng-repeat=\"post in posts\">\n    <span ng-bind=\"post.post_title\"></span>\n  </div>\n\n  <button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n  <form>\n    <input placeholder=\"title\" ng-model=\"postTitle\">\n    <!--<input placeholder=\"author\" ng-model=\"postAuthor\">-->\n    <textarea placeholder=\"article content\" ng-model=\"postContent\"></textarea>\n  </form>\n  <button ng-click=\"submitPost()\">CLICK TO SUBMIT</button>\n\n</div>";
 window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 module.exports = path;
 

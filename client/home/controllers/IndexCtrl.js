@@ -30,32 +30,6 @@ app.controller('IndexCtrl', [
       $scope.posts = result;
     }
 
-
-
-    // submit post
-    $scope.submitPost = function() {
-      var createPostSetting = {
-        method: 'POST',
-        url: '/api/post/post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          postTitle: $scope.postTitle,
-          author: $scope.postAuthor,
-          content: $scope.postContent
-        }
-      };
-
-      $http(createPostSetting)
-        .then(function(result) {
-          console.log('post result: ', result);
-        })
-        .catch(function(err) {
-          console.log('post err: ', err);
-        });
-    };
-
     // click login icon to open login window
     var loginDialog;
     $scope.login = function(status) {
@@ -94,25 +68,6 @@ app.controller('IndexCtrl', [
         })
         .catch(function(err) {
           console.log('login err: ', err);
-        });
-    };
-
-    // logout
-    $scope.logout = function() {
-      var logoutSetting = {
-        method: 'GET',
-        url: '/api/user/logout',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-
-      $http(logoutSetting)
-        .then(function(result) {
-          console.log('logout result: ', result);
-        })
-        .catch(function(err) {
-          console.log('logout err: ', err);
         });
     };
 
@@ -206,8 +161,6 @@ app.controller('IndexCtrl', [
           console.log('user exist error: ', err);
         });
     };
-
-    // console.log('useruseruseruser: ', user);
 
 
   }

@@ -320,10 +320,10 @@ function insertStyleElement (options, style) {
 }
 
 function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
 	style.parentNode.removeChild(style);
 
 	var idx = stylesInsertedAtTop.indexOf(style);
-
 	if(idx >= 0) {
 		stylesInsertedAtTop.splice(idx, 1);
 	}
@@ -1989,32 +1989,6 @@ app.controller('IndexCtrl', [
       $scope.posts = result;
     }
 
-
-
-    // submit post
-    $scope.submitPost = function() {
-      var createPostSetting = {
-        method: 'POST',
-        url: '/api/post/post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          postTitle: $scope.postTitle,
-          author: $scope.postAuthor,
-          content: $scope.postContent
-        }
-      };
-
-      $http(createPostSetting)
-        .then(function(result) {
-          console.log('post result: ', result);
-        })
-        .catch(function(err) {
-          console.log('post err: ', err);
-        });
-    };
-
     // click login icon to open login window
     var loginDialog;
     $scope.login = function(status) {
@@ -2053,25 +2027,6 @@ app.controller('IndexCtrl', [
         })
         .catch(function(err) {
           console.log('login err: ', err);
-        });
-    };
-
-    // logout
-    $scope.logout = function() {
-      var logoutSetting = {
-        method: 'GET',
-        url: '/api/user/logout',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-
-      $http(logoutSetting)
-        .then(function(result) {
-          console.log('logout result: ', result);
-        })
-        .catch(function(err) {
-          console.log('logout err: ', err);
         });
     };
 
@@ -2166,8 +2121,6 @@ app.controller('IndexCtrl', [
         });
     };
 
-    // console.log('useruseruseruser: ', user);
-
 
   }
 ]);
@@ -2260,7 +2213,7 @@ module.exports = __webpack_require__.p + "client/home/assets/register.png";
 /***/ (function(module, exports) {
 
 var path = '/client/home/view/index.html';
-var html = "<div>login status: <span ng-bind=\"loginStatus\"></span></div>\n<div class=\"main-page\">\n  <section class=\"single-post\" ng-repeat=\"post in posts\">\n\n    <div class=\"post-title\" ng-bind=\"post.post_title\"></div>\n    <em class=\"post-author\">\n      <span class=\"author-name\" ng-bind=\"post.author\"></span>\n      <span class=\"create-time\" ng-bind=\"post.created\"></span></em>\n    <p class=\"post-content\" ng-bind=\"post.post_content\"></p>\n\n\n  </section>\n\n  <div class=\"login-and-register\" \n  ng-class=\"{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}\" \n  ng-mousemove=\"showTwoIcons = (true && !loginStatus)\" \n  ng-mouseleave=\"showTwoIcons = false\">\n    <div class=\"login-icon\" ng-click=\"login(loginStatus)\"></div>\n    <div class=\"icon-separater\" ng-if=\"showTwoIcons\"></div>\n    <div class=\"register-icon\" ng-if=\"showTwoIcons\" ng-click=\"register()\"></div>\n  </div>\n\n  <!--<button class=\"login\" ng-click=\"login()\">Login</button>\n  <button class=\"sign-up\" ng-click=\"signUp()\">Sign Up</button>\n  <button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n  <button class=\"user-exist\" ng-click=\"userExist()\">User Exist</button>-->\n</div>\n\n<button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n<form>\n  <input placeholder=\"title\" ng-model=\"postTitle\">\n  <input placeholder=\"author\" ng-model=\"postAuthor\">\n  <textarea placeholder=\"article content\" ng-model=\"postContent\"></textarea>\n</form>\n<button ng-click=\"submitPost()\">CLICK TO SUBMIT</button>";
+var html = "<div>login status: <span ng-bind=\"loginStatus\"></span></div>\n<div class=\"main-page\">\n  <section class=\"single-post\" ng-repeat=\"post in posts\">\n\n    <div class=\"post-title\" ng-bind=\"post.post_title\"></div>\n    <em class=\"post-author\">\n      <span class=\"author-name\" ng-bind=\"post.author\"></span>\n      <span class=\"create-time\" ng-bind=\"post.created\"></span></em>\n    <p class=\"post-content\" ng-bind=\"post.post_content\"></p>\n\n\n  </section>\n\n  <div class=\"login-and-register\" \n  ng-class=\"{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}\" \n  ng-mousemove=\"showTwoIcons = (true && !loginStatus)\" \n  ng-mouseleave=\"showTwoIcons = false\">\n    <div class=\"login-icon\" ng-click=\"login(loginStatus)\"></div>\n    <div class=\"icon-separater\" ng-if=\"showTwoIcons\"></div>\n    <div class=\"register-icon\" ng-if=\"showTwoIcons\" ng-click=\"register()\"></div>\n  </div>\n\n  <!--<button class=\"login\" ng-click=\"login()\">Login</button>\n  <button class=\"sign-up\" ng-click=\"signUp()\">Sign Up</button>\n  <button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n  <button class=\"user-exist\" ng-click=\"userExist()\">User Exist</button>-->\n</div>";
 window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 module.exports = path;
 

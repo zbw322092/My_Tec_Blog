@@ -3,20 +3,13 @@ var db = require('../../database');
 
 module.exports = {
   createPost: function(req, res) {
-    // if (!req.session.key) {
-    //   return res
-    //     .status(200)
-    //     .json({
-    //       message: 'permission denied'
-    //     });
-    // }
     db.beginTransaction(function(err) {
       if (err) { throw err; }
       var createTimestamp = 'TB'+ + new Date();
-      console.log('createTimestamp: ', createTimestamp);
+      var author = req.session.key['name'];
       db.query(
         'INSERT INTO blogs VALUES(?, ?, ?, NOW(), null)',
-        [createTimestamp, req.body.author, req.body.postTitle],
+        [createTimestamp, author, req.body.postTitle],
         function(error, results, fields) {
           // if error happens, execute rollback
           if (error) {

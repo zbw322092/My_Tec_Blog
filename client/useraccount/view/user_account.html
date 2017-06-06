@@ -6,4 +6,13 @@
     <span ng-bind="post.post_title"></span>
   </div>
 
+  <button class="sign-up" ng-click="logout()">Logout</button>
+
+  <form>
+    <input placeholder="title" ng-model="postTitle">
+    <!--<input placeholder="author" ng-model="postAuthor">-->
+    <textarea placeholder="article content" ng-model="postContent"></textarea>
+  </form>
+  <button ng-click="submitPost()">CLICK TO SUBMIT</button>
+
 </div>
