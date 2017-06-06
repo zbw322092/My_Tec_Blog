@@ -153,12 +153,14 @@ module.exports = {
     var email = req.session.key['email'];
     var name = req.session.key['name'];
 
-    var sql = 'SELECT post_title FROM blogs WHERE author = ?';
+    var sql = 'SELECT blogs.post_title, blog_body.post_content FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ?';
     var inserts = [name];
     sql = mysql.format(sql, inserts);
+    console.log(sql);
 
     db.query(sql, function(error, results, fields) {
       if (error) {
+        console.log(error);
         return res.status(500).json({ mesaage: 'query failed' });
       }
       res.status(200)
