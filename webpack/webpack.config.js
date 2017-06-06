@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var path = require('path');
 var minimatch = require('minimatch');
 var chalk = require('chalk');
@@ -59,7 +60,11 @@ const config = {
         loader: "less-loader"
       }] }
     ]
-  }
+  },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
 
 module.exports = config;

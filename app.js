@@ -49,7 +49,7 @@ app.use(function(req, res, next) {
 });
 
 routers(app);
-require('./server/webserver/webpackServer.js')(app);
+require('./server/webserver/webpackServer.js')(app, port);
 
 app.listen(port, function() {
   console.log('Express Server is Listening on Port ', port);

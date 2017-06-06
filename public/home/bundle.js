@@ -320,10 +320,10 @@ function insertStyleElement (options, style) {
 }
 
 function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
 	style.parentNode.removeChild(style);
 
 	var idx = stylesInsertedAtTop.indexOf(style);
+
 	if(idx >= 0) {
 		stylesInsertedAtTop.splice(idx, 1);
 	}
@@ -1936,18 +1936,18 @@ app.config(function($stateProvider, $locationProvider) {
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(45);
 __webpack_require__(46);
 __webpack_require__(47);
 __webpack_require__(48);
+__webpack_require__(49);
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(41);
 __webpack_require__(42);
 __webpack_require__(43);
+__webpack_require__(44);
 
 /***/ }),
 /* 26 */,
@@ -2209,16 +2209,17 @@ exports.push([module.i, ".register-dialog .ngdialog-close {\n  padding: 0 !impor
 module.exports = __webpack_require__.p + "client/home/assets/register.png";
 
 /***/ }),
-/* 41 */
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports) {
 
 var path = '/client/home/view/index.html';
-var html = "<div>login status: <span ng-bind=\"loginStatus\"></span></div>\n<div class=\"main-page\">\n  <section class=\"single-post\" ng-repeat=\"post in posts\">\n\n    <div class=\"post-title\" ng-bind=\"post.post_title\"></div>\n    <em class=\"post-author\">\n      <span class=\"author-name\" ng-bind=\"post.author\"></span>\n      <span class=\"create-time\" ng-bind=\"post.created\"></span></em>\n    <p class=\"post-content\" ng-bind=\"post.post_content\"></p>\n\n\n  </section>\n\n  <div class=\"login-and-register\" \n  ng-class=\"{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}\" \n  ng-mousemove=\"showTwoIcons = (true && !loginStatus)\" \n  ng-mouseleave=\"showTwoIcons = false\">\n    <div class=\"login-icon\" ng-click=\"login(loginStatus)\"></div>\n    <div class=\"icon-separater\" ng-if=\"showTwoIcons\"></div>\n    <div class=\"register-icon\" ng-if=\"showTwoIcons\" ng-click=\"register()\"></div>\n  </div>\n\n  <!--<button class=\"login\" ng-click=\"login()\">Login</button>\n  <button class=\"sign-up\" ng-click=\"signUp()\">Sign Up</button>\n  <button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n  <button class=\"user-exist\" ng-click=\"userExist()\">User Exist</button>-->\n</div>";
+var html = "<!--<div>login status: <span ng-bind=\"loginStatus\"></span></div>-->\n<div class=\"main-page\">\n  <section class=\"single-post\" ng-repeat=\"post in posts\">\n\n    <div class=\"post-title\" ng-bind=\"post.post_title\"></div>\n    <em class=\"post-author\">\n      <span class=\"author-name\" ng-bind=\"post.author\"></span>\n      <span class=\"create-time\" ng-bind=\"post.created\"></span></em>\n    <p class=\"post-content\" ng-bind=\"post.post_content\"></p>\n\n\n  </section>\n\n  <div class=\"login-and-register\" \n  ng-class=\"{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}\" \n  ng-mousemove=\"showTwoIcons = (true && !loginStatus)\" \n  ng-mouseleave=\"showTwoIcons = false\">\n    <div class=\"login-icon\" ng-click=\"login(loginStatus)\"></div>\n    <div class=\"icon-separater\" ng-if=\"showTwoIcons\"></div>\n    <div class=\"register-icon\" ng-if=\"showTwoIcons\" ng-click=\"register()\"></div>\n  </div>\n\n  <!--<button class=\"login\" ng-click=\"login()\">Login</button>\n  <button class=\"sign-up\" ng-click=\"signUp()\">Sign Up</button>\n  <button class=\"sign-up\" ng-click=\"logout()\">Logout</button>\n\n  <button class=\"user-exist\" ng-click=\"userExist()\">User Exist</button>-->\n</div>";
 window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 module.exports = path;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 var path = '/client/home/view/login_dialog.html';
@@ -2227,7 +2228,7 @@ window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, htm
 module.exports = path;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 var path = '/client/home/view/register_dialog.html';
@@ -2236,8 +2237,8 @@ window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, htm
 module.exports = path;
 
 /***/ }),
-/* 44 */,
-/* 45 */
+/* 45 */,
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -2268,7 +2269,7 @@ if(false) {
 }
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -2299,7 +2300,7 @@ if(false) {
 }
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -2330,7 +2331,7 @@ if(false) {
 }
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag

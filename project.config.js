@@ -1,4 +1,5 @@
 module.exports = {
+  hostProxy: 'http://localhost',
   webpack: {
     entry: {
       home: './client/home/index.js',
