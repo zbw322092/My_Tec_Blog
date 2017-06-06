@@ -1,21 +1,25 @@
 var path = require('path');
 var minimatch = require('minimatch');
+var chalk = require('chalk');
 var webpackEntries = require('../project.config.js').webpack.entry;
 
 function entryFilter() {
 
   var entryModules = process.env.ENTRY_MODULES ? JSON.parse(process.env.ENTRY_MODULES) || [] : [];
-  console.log('entryModulesentryModulesentryModulesentryModules ', entryModules);
 
   var entryKeys = Object.keys(webpackEntries);
   var newEntry = {};
   entryModules.forEach(function(value, index) {
     var matchResult =  minimatch.match(entryKeys, value, { matchBase: true });
     if (matchResult.length) {
-      newEntry[value] = webpackEntries[value];
+      matchResult.forEach(function(matchValue, matchIndex) {
+        newEntry[matchValue] = webpackEntries[matchValue];
+      });
     }
   });
-  console.log('newEntrynewEntrynewEntrynewEntry: ', newEntry);
+  console.log(chalk.green('--------------Webpack entries--------------'));
+  console.log(newEntry);
+  console.log(chalk.green('--------------Webpack entries--------------'));
   return newEntry;
 }
 
