@@ -156,7 +156,6 @@ module.exports = {
     var sql = 'SELECT blogs.post_title, blog_body.post_content FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ?';
     var inserts = [name];
     sql = mysql.format(sql, inserts);
-    console.log(sql);
 
     db.query(sql, function(error, results, fields) {
       if (error) {
