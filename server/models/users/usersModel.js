@@ -153,7 +153,8 @@ module.exports = {
     var email = req.session.key['email'];
     var name = req.session.key['name'];
 
-    var sql = 'SELECT blogs.post_title, blog_body.post_content FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ?';
+    var sql = 'SELECT blogs.post_title, blog_body.post_content, blogs.created, blogs.modified, blogs.tags ' +
+    'FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ?';
     var inserts = [name];
     sql = mysql.format(sql, inserts);
 

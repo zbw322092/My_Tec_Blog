@@ -15,9 +15,9 @@
         <div class="post-content" ng-bind="post.post_content"></div>
         <div class="post-basic-info">
           <span class="post-tag-icon"></span>
-          <span class="post-tag">Javascript</span>
-          <span class="created-at">Created At <span>2017-06-01</span></span>
-          <span class="update-at">Update At <span>2017-06-15</span></span>
+          <span class="post-tag" ng-bind="post.tags"></span>
+          <span class="created-at">Created At <span ng-bind="(post.created).slice(0,10)"></span></span>
+          <span class="update-at" ng-if="post.modified">Update At <span ng-bind="post.modified"></span></span>
         </div>
       </li>
     </div>

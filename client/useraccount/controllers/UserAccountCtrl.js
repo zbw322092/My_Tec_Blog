@@ -23,6 +23,8 @@ app.controller('UserAccountCtrl', [
           console.log('data: ', result);
           $scope.username = data.username;
           $scope.posts = data.posts;
+          $scope.created = data.created.slice(0, 10);
+          $scope.modified = data.modified;
         })
         .catch(function(err) {
           console.log('err: ', err);
