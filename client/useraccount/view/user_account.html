@@ -1,5 +1,31 @@
 <div class="useraccount">
-  <div class="user-icon"></div>
+
+  <div class="left-panel">
+    <div class="user-icon"></div>
+    <div class="user-name" ng-bind="username"></div>
+  </div>
+
+  <div class="right-panel">
+    <div class="post-created-by-user">Posts Created By You</div>
+    <div class="posts-list">
+      <li class="list-unit" ng-repeat="post in posts">
+        <h3 class="post-title">
+          <a ng-bind="post.post_title"></a>
+        </h3>
+        <div class="post-content" ng-bind="post.post_content"></div>
+        <div class="post-basic-info">
+          <span class="post-tag-icon"></span>
+          <span class="post-tag">Javascript</span>
+          <span class="created-at">Created At <span>2017-06-01</span></span>
+          <span class="update-at">Update At <span>2017-06-15</span></span>
+        </div>
+      </li>
+    </div>
+  </div>
+
+
+
+
   <!--<div>Welcome, <span ng-bind="username"></span></div>
 
   The Articles Posted By You:

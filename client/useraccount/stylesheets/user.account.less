@@ -1,12 +1,92 @@
 @import 'common.less';
 body {
   margin: 0 !important;
+  word-wrap: break-word;
 }
 
 .useraccount {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  margin: auto;
+  
+  // page left area
+  .left-panel {
+    width: 25%;
+    float: left;
+  }
   .user-icon {
+    position: relative;
     width: 150px;
     height: 150px;
     .background('user_icon.png');
   }
+  .user-name {
+    font-size: 20px;
+    color: #666666;
+    width: 150px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  
+  // page right area
+  .right-panel {
+    width: 75%;
+    float: left;
+  }
+
+  .list-unit {
+    display: block;
+    border-bottom: 1px #e4e4e4 solid;
+    padding-top: 24px;
+    padding-bottom: 24px;
+
+    .post-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 0;
+
+      a {
+        color: #0366d6;
+      }
+    }
+  
+    .post-content {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin-top: 10px;
+      max-height: 44px;
+      line-height: 22px;
+      color: #666666;
+    }
+
+
+    .post-basic-info {
+      line-height: 100%;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #586069;
+      .post-tag-icon {
+        position: relative;
+        display: inline-block;
+        top: 1px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #f1e05a;
+      }
+
+      .post-tag {
+        margin-right: 16px;
+      }
+      .created-at {
+        margin-right: 16px;
+      }
+    }
+
+  }
+
+
+
 }

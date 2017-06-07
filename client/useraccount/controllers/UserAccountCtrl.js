@@ -8,6 +8,8 @@ app.controller('UserAccountCtrl', [
     ngDialog
   ) {
 
+    $scope.username = window.GLOBAL.username ? window.GLOBAL.username : "";
+
     initPage();
     function initPage() {
       var getUserDataSetting = {

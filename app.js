@@ -23,9 +23,9 @@ app.use(session({
     port: 6379,
     client: redisClient
   }),
-  cookie: {
-    maxAge: 6000000
-  },
+  // cookie: {
+  //   maxAge: 6000000
+  // },
   saveUninitialized: false,
   resave: false
 }));
@@ -45,6 +45,11 @@ app.set('views', path.join(__dirname, 'server/views/'));
 
 app.use(function(req, res, next) {
   app.locals.loginStatus = req.session.key ? true : false;
+  next();
+});
+
+app.use(function(req, res, next) {
+  app.locals.username = req.session.key ? req.session.key["name"] : undefined;
   next();
 });
 
