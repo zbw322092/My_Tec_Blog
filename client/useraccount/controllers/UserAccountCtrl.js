@@ -35,6 +35,19 @@ app.controller('UserAccountCtrl', [
       console.log('Read More............');
     };
 
+    $scope.showEditIcon = function(index) {
+      var iconIndex = 'showEditIcon' + index;
+      $scope[iconIndex] = true;
+    };
+
+    $scope.hideEditIcon = function(index) {
+      var iconIndex = 'showEditIcon' + index;
+      $scope[iconIndex] = false;
+    };
+
+    $scope.editPost = function(index) {
+      console.log('Edit this post: ', index);
+    };
 
     // logout
     $scope.logout = function() {

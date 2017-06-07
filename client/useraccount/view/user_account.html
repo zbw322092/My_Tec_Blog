@@ -8,7 +8,7 @@
   <div class="right-panel">
     <div class="post-created-by-user">Posts Created By You</div>
     <div class="posts-list">
-      <li class="list-unit" ng-repeat="post in posts">
+      <li class="list-unit" ng-repeat="post in posts" ng-mouseover="showEditIcon($index)" ng-mouseleave="hideEditIcon($index)">
         <h3 class="post-title">
           <a ng-bind="post.post_title"></a>
         </h3>
@@ -21,6 +21,7 @@
           <span class="post-tag" ng-bind="post.tags"></span>
           <span class="created-at">Created At <span ng-bind="(post.created).slice(0,10)"></span></span>
           <span class="update-at" ng-if="post.modified">Update At <span ng-bind="post.modified"></span></span>
+          <span class="edit-icon" ng-show="{{'showEditIcon' + $index}}" ng-click="editPost($index)"></span>
         </div>
       </li>
     </div>
