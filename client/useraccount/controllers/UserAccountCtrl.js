@@ -31,6 +31,10 @@ app.controller('UserAccountCtrl', [
         });
     }
 
+    $scope.readMore = function() {
+      console.log('Read More............');
+    };
+
 
     // logout
     $scope.logout = function() {

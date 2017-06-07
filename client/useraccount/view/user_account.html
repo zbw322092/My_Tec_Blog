@@ -12,7 +12,10 @@
         <h3 class="post-title">
           <a ng-bind="post.post_title"></a>
         </h3>
-        <div class="post-content" ng-bind="post.post_content"></div>
+        <div class="post-content">
+          <span class="content-excerpt" ng-bind="post.post_content_excerpt + '...'"></span>
+          <span class="read-more" ng-click="readMore()">(Read More)</span>
+        </div>
         <div class="post-basic-info">
           <span class="post-tag-icon"></span>
           <span class="post-tag" ng-bind="post.tags"></span>
