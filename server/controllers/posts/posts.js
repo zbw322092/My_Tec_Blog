@@ -7,5 +7,8 @@ router.get('/posts', postModel.getAllPost);
 
 router.post('/post', userModel.loginRequired, postModel.createPost);
 
+// get single post which specified with post_id
+router.get('/post/:id', postModel.getOnePost);
+
 
 module.exports = router;

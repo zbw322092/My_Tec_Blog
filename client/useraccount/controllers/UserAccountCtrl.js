@@ -1,10 +1,12 @@
 app.controller('UserAccountCtrl', [
   '$scope',
   '$http',
+  '$state',
   'ngDialog',
   function(
     $scope,
     $http,
+    $state,
     ngDialog
   ) {
 
@@ -21,17 +23,17 @@ app.controller('UserAccountCtrl', [
         .then(function(result) {
           var data = result.data.data || {};
           console.log('data: ', result);
-          $scope.username = data.username;
           $scope.posts = data.posts;
-          $scope.created = data.created.slice(0, 10);
-          $scope.modified = data.modified;
         })
         .catch(function(err) {
           console.log('err: ', err);
         });
     }
 
-    $scope.readMore = function() {
+    $scope.readMore = function(index) {
+      $state.go('post', {
+        id: $scope.posts[index]['post_id']
+      });
       console.log('Read More............');
     };
 

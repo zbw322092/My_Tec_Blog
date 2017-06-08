@@ -72,6 +72,31 @@ module.exports = {
           data: results
         });
     });
+  },
+
+  getOnePost: function(req, res) {
+    var post_id = req.params.id;
+    var sql = "SELECT * FROM blogs INNER JOIN blog_body ON blogs.post_id = ? AND blogs.post_id = blog_body.post_id";
+    var insert = [post_id];
+    var sql = mysql.format(sql, insert);
+
+    db.query(sql, function(error, results, fields) {
+      if (error) {
+        return res
+          .status(500)
+          .json({
+            message: 'get post error'
+          })
+      }
+
+      return res
+        .status(200)
+        .json({
+          code: '0000',
+          message: 'success',
+          data: results
+        });
+    });
   }
 
 }
