@@ -49,6 +49,9 @@ app.controller('UserAccountCtrl', [
 
     $scope.editPost = function(index) {
       console.log('Edit this post: ', index);
+      $state.go('editPost', {
+        id: $scope.posts[index]['post_id']
+      });
     };
 
     // logout
