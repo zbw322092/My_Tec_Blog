@@ -3,7 +3,7 @@
   <div class="left-panel">
     <div class="user-icon"></div>
     <div class="user-name" ng-bind="username"></div>
-    
+
     <button class="logout-btn" ng-click="logout()">Logout</button>
   </div>
 
@@ -26,6 +26,9 @@
           <span class="edit-icon" ng-show="{{'showEditIcon' + $index}}" ng-click="editPost($index)"></span>
         </div>
       </li>
+    </div>
+
+    <div paging page="1" page-size="5" total="50">
     </div>
   </div>
 

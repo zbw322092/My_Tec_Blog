@@ -4,6 +4,7 @@ window.app = angular.module('my_tec_blog', ['ui.router', 'ngDialog']);
 require('../../lib/lib_vendor/');
 require('../../lib/lib_angular/core/');
 require('../../lib/lib_angular/stylesheets/');
+require('../../lib/lib_angular/directives/pagination/');
 
 require('./router.js');
 require('./controllers/');
