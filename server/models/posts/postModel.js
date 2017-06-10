@@ -125,6 +125,33 @@ module.exports = {
           message: 'update post successfully'
         });
     });
+  },
+
+  deleteOnePost: function(req, res) {
+    var postId = req.query.postId;
+    var sql = "DELETE blogs, blog_body FROM blogs INNER JOIN blog_body " + 
+    "WHERE blogs.post_id = blog_body.post_id AND blogs.post_id = ?;";
+    var inserts = [postId];
+    sql = mysql.format(sql, inserts);
+
+    db.query(sql, function(error, results, fields) {
+
+      if (error) {
+        console.log('error: ', error);
+        return res
+          .status(500)
+          .json({
+            message: 'delete post error'
+          })
+      }
+
+      return res
+        .status(200)
+        .json({
+          code: '0000',
+          message: 'delete post successfully'
+        });
+    });
   }
 
 }

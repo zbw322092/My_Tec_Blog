@@ -12,5 +12,7 @@ router.get('/post/:id', postModel.getOnePost);
 
 router.put('/update_post', postModel.updateOnePost);
 
+router.delete('/delete_post', postModel.deleteOnePost);
+
 
 module.exports = router;

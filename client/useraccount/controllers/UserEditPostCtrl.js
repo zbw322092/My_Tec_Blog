@@ -72,6 +72,32 @@ app.controller('UserEditPostCtrl', [
         });
     };
 
+    $scope.deletePost = function() {
+      var deletePostSetting = {
+        method: 'DELETE',
+        url: '/api/post/delete_post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          postId: post_id
+        }
+      };
+
+      $http(deletePostSetting)
+        .then(function(result) {
+          if (result.data.code === '0000') {
+            console.log('hhhhhhhh');
+            $state.go('index');
+          } else {
+            console.log(result.message);
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    };
+
 
 
   }
