@@ -160,7 +160,6 @@ module.exports = {
     'FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ? LIMIT ?,?;';
     var inserts = [name,offset,size];
     sql = mysql.format(sql, inserts);
-    console.log(sql);
 
     db.query(sql, function(errors, results, fields) {
       if (errors) {

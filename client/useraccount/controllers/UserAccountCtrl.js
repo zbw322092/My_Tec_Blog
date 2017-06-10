@@ -11,6 +11,7 @@ app.controller('UserAccountCtrl', [
   ) {
 
     $scope.username = window.GLOBAL.username ? window.GLOBAL.username : "";
+    $scope.size = 3;
 
     initPage();
     function initPage() {
@@ -18,7 +19,7 @@ app.controller('UserAccountCtrl', [
         method: 'GET',
         url: '/api/user/basic_info',
         params: {
-          size: 2,
+          size: $scope.size,
           page: 1
         }
       };
@@ -102,6 +103,31 @@ app.controller('UserAccountCtrl', [
         .catch(function(err) {
           console.log('post err: ', err);
         });
+    };
+
+    $scope.turnPage = function(page) {
+      console.log(arguments);
+      var getPageDataSetting = {
+        method: 'GET',
+        url: '/api/user/basic_info',
+        params: {
+          size: $scope.size,
+          page: page
+        }
+      };
+
+      $http(getPageDataSetting)
+        .then(function(result) {
+          var data = result.data.data || {};
+          console.log('data: ', result);
+          $scope.posts = data.posts;
+          
+          $scope.postAmount = data.postAmount;
+        })
+        .catch(function(err) {
+          console.log('err: ', err);
+        });
+
     };
 
 
