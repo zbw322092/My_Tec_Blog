@@ -156,28 +156,41 @@ module.exports = {
     var page = Number(req.query.page);
     var offset = page * size - 2;
 
-    var sql = 'SELECT blogs.post_id, blogs.post_title, LEFT(blog_body.post_content, 200) AS post_content_excerpt, blogs.created, blogs.modified, blogs.tags ' +
+    var sql = 'SELECT SQL_CALC_FOUND_ROWS blogs.post_id, blogs.post_title, LEFT(blog_body.post_content, 200) AS post_content_excerpt, blogs.created, blogs.modified, blogs.tags ' +
     'FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ? LIMIT ?,?;';
     var inserts = [name,offset,size];
     sql = mysql.format(sql, inserts);
     console.log(sql);
 
-    db.query(sql, function(error, results, fields) {
-      if (error) {
-        console.log(error);
+    db.query(sql, function(errors, results, fields) {
+      if (errors) {
+        console.log(errors);
         return res.status(500).json({ mesaage: 'query failed' });
       }
-      var postAmount = results.length;
-      res.status(200)
-        .json({
-          message: 'success',
-          code: '0000',
-          data: {
-            username: name,
-            postAmount: postAmount,
-            posts: results
-          }
-        });
+      var postsResult = results;
+
+      db.query('SELECT FOUND_ROWS() AS postAmount;', function(errors, results, fields) {
+        if (errors) {
+          console.log(errors);
+          return res.status(500).json({ mesaage: 'query failed' });
+        }
+
+        // number of posts which will be return without LIMIT clause
+        var postAmount = results[0].postAmount;
+
+        res.status(200)
+          .json({
+            message: 'success',
+            code: '0000',
+            data: {
+              username: name,
+              postAmount: postAmount,
+              posts: postsResult
+            }
+          });
+
+
+      });
     });
 
   }

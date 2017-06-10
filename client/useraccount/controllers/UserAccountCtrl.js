@@ -29,7 +29,7 @@ app.controller('UserAccountCtrl', [
           console.log('data: ', result);
           $scope.posts = data.posts;
           
-          $scope.postAmount = $scope.posts.length;
+          $scope.postAmount = data.postAmount;
         })
         .catch(function(err) {
           console.log('err: ', err);
