@@ -40,6 +40,39 @@ app.controller('UserEditPostCtrl', [
     }
 
 
+    $scope.updatePost = function() {
+      var updatePostSetting = {
+        method: 'PUT',
+        url: '/api/post/update_post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          postId: post_id
+        },
+        data: {
+          postTitle: $scope.post.post_title,
+          tags: $scope.post.tags,
+          postContent: $scope.post.post_content
+        }
+      };
+
+      $http(updatePostSetting)
+        .then(function(result) {
+          if (result.data.code === '0000') {
+            $state.go('post', {
+              id: post_id
+            });
+          } else {
+            console.log(result.message);
+          }
+        })
+        .catch(function(err) {
+          console.log('err: ', err);
+        });
+    };
+
+
 
   }
 ]);

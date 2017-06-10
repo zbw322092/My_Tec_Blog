@@ -97,6 +97,34 @@ module.exports = {
           data: results
         });
     });
+  },
+
+  updateOnePost: function(req, res) {
+    var postId = req.query.postId;
+    var modified = new Date();
+    var sql = "UPDATE blogs, blog_body SET blogs.post_title = ?, blogs.modified = ?, blogs.tags = ? ," +
+    "blog_body.post_content = ? WHERE blogs.post_id = blog_body.post_id AND blog_body.post_id = '" + postId + "';";
+    var inserts = [req.body.postTitle, modified, req.body.tags, req.body.postContent];
+    sql = mysql.format(sql, inserts);
+
+    db.query(sql, function(error, results, fields) {
+
+      if (error) {
+        console.log('error: ', error);
+        return res
+          .status(500)
+          .json({
+            message: 'update post error'
+          })
+      }
+
+      return res
+        .status(200)
+        .json({
+          code: '0000',
+          message: 'update post successfully'
+        });
+    });
   }
 
 }

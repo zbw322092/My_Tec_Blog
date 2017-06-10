@@ -5,7 +5,6 @@ var SaltRound = 10;
 
 module.exports = {
   register: function(req, res) {
-    console.log(req.body);
     bcrypt.genSalt(SaltRound, function(err, salt) {
       if (err) {
         return console.log('generate salt error: ', err)
