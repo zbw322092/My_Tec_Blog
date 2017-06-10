@@ -8,8 +8,8 @@ module.exports = {
       var createTimestamp = 'TB'+ + new Date();
       var author = req.session.key['name'];
       db.query(
-        'INSERT INTO blogs VALUES(?, ?, ?, NOW(), null)',
-        [createTimestamp, author, req.body.postTitle],
+        'INSERT INTO blogs VALUES(?, ?, ?, NOW(), null, ?)',
+        [createTimestamp, author, req.body.postTitle, req.body.tags],
         function(error, results, fields) {
           // if error happens, execute rollback
           if (error) {

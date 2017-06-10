@@ -16,7 +16,11 @@ app.controller('UserAccountCtrl', [
     function initPage() {
       var getUserDataSetting = {
         method: 'GET',
-        url: '/api/user/basic_info'
+        url: '/api/user/basic_info',
+        params: {
+          size: 2,
+          page: 1
+        }
       };
 
       $http(getUserDataSetting)
@@ -24,6 +28,8 @@ app.controller('UserAccountCtrl', [
           var data = result.data.data || {};
           console.log('data: ', result);
           $scope.posts = data.posts;
+          
+          $scope.postAmount = $scope.posts.length;
         })
         .catch(function(err) {
           console.log('err: ', err);
@@ -84,6 +90,7 @@ app.controller('UserAccountCtrl', [
         },
         data: {
           postTitle: $scope.postTitle,
+          tags: $scope.tags,
           content: $scope.postContent
         }
       };

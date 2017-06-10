@@ -152,23 +152,29 @@ module.exports = {
   basicInfo: function(req, res, next) {
     var email = req.session.key['email'];
     var name = req.session.key['name'];
+    var size = Number(req.query.size);
+    var page = Number(req.query.page);
+    var offset = page * size - 2;
 
     var sql = 'SELECT blogs.post_id, blogs.post_title, LEFT(blog_body.post_content, 200) AS post_content_excerpt, blogs.created, blogs.modified, blogs.tags ' +
-    'FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ?';
-    var inserts = [name];
+    'FROM blogs INNER JOIN blog_body ON blogs.post_id = blog_body.post_id AND blogs.author = ? LIMIT ?,?;';
+    var inserts = [name,offset,size];
     sql = mysql.format(sql, inserts);
+    console.log(sql);
 
     db.query(sql, function(error, results, fields) {
       if (error) {
         console.log(error);
         return res.status(500).json({ mesaage: 'query failed' });
       }
+      var postAmount = results.length;
       res.status(200)
         .json({
           message: 'success',
           code: '0000',
           data: {
             username: name,
+            postAmount: postAmount,
             posts: results
           }
         });

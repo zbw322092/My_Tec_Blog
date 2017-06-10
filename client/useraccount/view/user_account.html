@@ -28,7 +28,7 @@
       </li>
     </div>
 
-    <div paging page="1" page-size="5" total="50">
+    <div paging page="1" page-size="2" total="postAmount" show-prev-next="true" show-first-last="true">
     </div>
   </div>
 
@@ -46,6 +46,13 @@
 
   <form>
     <input placeholder="title" ng-model="postTitle">
+    <textarea placeholder="article content" ng-model="postContent"></textarea>
+  </form>
+  <button ng-click="submitPost()">CLICK TO SUBMIT</button>-->
+
+  <!--<form>
+    <input placeholder="title" ng-model="postTitle">
+    <input placeholder="tags" ng-model="tags">
     <textarea placeholder="article content" ng-model="postContent"></textarea>
   </form>
   <button ng-click="submitPost()">CLICK TO SUBMIT</button>-->
