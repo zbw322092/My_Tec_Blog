@@ -46,7 +46,7 @@ module.exports = {
   },
 
   login: function(req, res) {
-    db.query('SELECT name, email, password FROM users WHERE ? = email',
+    db.query('SELECT id, name, email, password FROM users WHERE ? = email',
     [req.body.email],
     function(error, results, fields) {
       if (error) {

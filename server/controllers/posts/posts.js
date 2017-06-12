@@ -14,5 +14,7 @@ router.put('/update_post', postModel.updateOnePost);
 
 router.delete('/delete_post', postModel.deleteOnePost);
 
+router.post('/like', postModel.likePost);
+
 
 module.exports = router;

@@ -2,19 +2,19 @@
 <div class="main-page">
   <section class="single-post" ng-repeat="post in posts">
 
-    <div class="post-title" ng-bind="post.post_title"></div>
+    <span class="post-title" ng-bind="post.post_title"></span>
+    <div class="like-icon" ng-click="likeThisPost($index)"></div>
     <em class="post-author">
       <span class="author-name" ng-bind="post.author"></span>
-      <span class="create-time" ng-bind="post.created"></span></em>
+      <span class="create-time" ng-bind="post.created"></span>
+    </em>
     <p class="post-content" ng-bind="post.post_content"></p>
 
 
   </section>
 
-  <div class="login-and-register" 
-  ng-class="{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}" 
-  ng-mousemove="showTwoIcons = (true && !loginStatus)" 
-  ng-mouseleave="showTwoIcons = false">
+  <div class="login-and-register" ng-class="{'login-and-register-on-hover': showTwoIcons, 'login-status-icon': loginStatus}"
+    ng-mousemove="showTwoIcons = (true && !loginStatus)" ng-mouseleave="showTwoIcons = false">
     <div class="login-icon" ng-click="login(loginStatus)"></div>
     <div class="icon-separater" ng-if="showTwoIcons"></div>
     <div class="register-icon" ng-if="showTwoIcons" ng-click="register()"></div>

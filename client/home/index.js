@@ -7,5 +7,5 @@ require('../../lib/lib_angular/stylesheets/');
 
 require('./router.js');
 require('./controllers/');
-require('./stylesheets/');
+require('./stylesheets/index.js');
 require('./view/');

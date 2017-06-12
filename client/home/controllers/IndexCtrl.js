@@ -162,6 +162,34 @@ app.controller('IndexCtrl', [
         });
     };
 
+    
+    // click 'like' icon to like this post
+    $scope.likeThisPost = function(index) {
+      var post_id = $scope.posts[index].post_id;
+
+      var likePostSetting = {
+        method: 'POST',
+        url: '/api/post/like',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          post_id: post_id
+        }
+      };
+
+      $http(likePostSetting)
+        .then(function(result) {
+          console.log('Like result: ', result);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+
+    };
+
+
+
 
   }
 ]);

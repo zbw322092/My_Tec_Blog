@@ -152,6 +152,34 @@ module.exports = {
           message: 'delete post successfully'
         });
     });
+  },
+
+  likePost: function(req, res) {
+    var post_id = req.body.post_id;
+    var liked_userid = req.session.key['id'];
+    var sql = 'INSERT INTO post_likes (post_id,liked_userid,created,status) VALUES(?,?,NOW(),?) ' + 
+    'ON DUPLICATE KEY UPDATE status = ?';
+    var inserts = [post_id, liked_userid, '1', '1'];
+    sql = mysql.format(sql, inserts);
+
+    db.query(sql, function(error, results, fields) {
+
+      if (error) {
+        console.log('error: ', error);
+        return res
+          .status(500)
+          .json({
+            message: 'like post error'
+          })
+      }
+
+      return res
+        .status(200)
+        .json({
+          code: '0000',
+          message: 'like post successfully'
+        });
+    });
   }
 
 }
