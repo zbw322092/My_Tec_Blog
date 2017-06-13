@@ -224,7 +224,7 @@ app.controller('IndexCtrl', [
           console.log('Like result: ', result);
           $scope.posts[index]['isLiked'] = true;
           
-          $scope.likeCount = result.data.data.like_times || '';
+          $scope.posts[index].like_times += 1;
         })
         .catch(function(err) {
           console.log(err);
@@ -251,7 +251,7 @@ app.controller('IndexCtrl', [
           console.log('Like result: ', result);
           $scope.posts[index]['isLiked'] = false;
 
-          $scope.likeCount = result.data.data.like_times || '';
+          $scope.posts[index].like_times -= 1;
         })
         .catch(function(err) {
           console.log(err);

@@ -55,11 +55,8 @@ module.exports = {
   },
 
   getAllPost: function (req, res) {
-    var sql = "SELECT *, DATE_FORMAT(created, '%Y-%m-%d') AS created, like_times FROM blogs LEFT JOIN " +
+    var sql = "SELECT *, blogs.post_id, DATE_FORMAT(created, '%Y-%m-%d') AS created, COALESCE(post_count.like_times, 0) AS like_times FROM blogs JOIN " +
         "blog_body ON blogs.post_id = blog_body.post_id LEFT JOIN post_count ON blogs.post_id = post_count.post_id";
-
-    // var sql = "SELECT *, DATE_FORMAT(created, '%Y-%m-%d') AS created FROM blogs LEFT JOIN " +
-    //     "blog_body ON blogs.post_id = blog_body.post_id";
     sql = mysql.format(sql);
     db.query(sql, function (error, results, fields) {
       if (error) {
