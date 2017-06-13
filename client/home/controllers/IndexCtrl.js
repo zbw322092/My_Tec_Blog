@@ -34,7 +34,6 @@ app.controller('IndexCtrl', [
           likeRequest
         ])
         .then(function (result) {
-          console.log('resultresultresult: ', result);
           renderPostandLikes(result);
         })
         .catch(function (err) {
@@ -46,7 +45,6 @@ app.controller('IndexCtrl', [
         $http(getPostSetting)
           .then(function(result) {
             var responseData = result.data.data;
-            console.log('result: ', result.data.data);
             $scope.posts = responseData;
           })
           .catch(function(err) {
@@ -64,7 +62,6 @@ app.controller('IndexCtrl', [
       });
 
       postsResult.forEach(function(value,key,array) {
-        console.log('value.post_idvalue.post_id', value.post_id)
         if (likedPostArr.indexOf(value.post_id) != -1) {
           value["isLiked"] = true;
         }
@@ -225,11 +222,36 @@ app.controller('IndexCtrl', [
       $http(likePostSetting)
         .then(function(result) {
           console.log('Like result: ', result);
+          $scope.posts[index]['isLiked'] = true;
         })
         .catch(function(err) {
           console.log(err);
         });
 
+    };
+
+    $scope.unlikeThisPost = function(index) {
+      var post_id = $scope.posts[index].post_id;
+
+      var unlikePostSetting = {
+        method: 'POST',
+        url: '/api/post/unlike',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          post_id: post_id
+        }
+      };
+
+      $http(unlikePostSetting)
+        .then(function(result) {
+          console.log('Like result: ', result);
+          $scope.posts[index]['isLiked'] = false;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     };
 
 

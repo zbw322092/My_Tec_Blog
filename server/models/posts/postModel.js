@@ -162,7 +162,7 @@ module.exports = {
 
   getLikes: function (req, res) {
     var userId = req.session.key['id'];
-    var sql = "SELECT post_id FROM post_likes WHERE liked_userid = ?";
+    var sql = "SELECT post_id FROM post_likes WHERE liked_userid = ? AND status = '1'";
     var inserts = [userId];
     sql = mysql.format(sql, inserts);
     db.query(sql, function (error, results, fields) {
@@ -179,6 +179,28 @@ module.exports = {
           message: 'success',
           data: results
         });
+    });
+  },
+
+  unlikePost: function (req, res) {
+    var post_id = req.body.post_id;
+    var liked_userid = req.session.key['id'];
+    var sql = 'UPDATE post_likes SET status = ? WHERE post_id = ? AND liked_userid = ?'
+    var inserts = ['0',post_id, liked_userid];
+    sql = mysql.format(sql, inserts);
+
+    db.query(sql, function (error, results, fields) {
+
+      if (error) {
+        console.log('error: ', error);
+        return res
+          .status(500)
+          .json({message: 'unlike post error'})
+      }
+
+      return res
+        .status(200)
+        .json({code: '0000', message: 'unlike post successfully'});
     });
   }
 

@@ -18,5 +18,6 @@ router.post('/like', usersModel.loginRequired, postModel.likePost);
 
 router.get('/likes', usersModel.loginRequired, postModel.getLikes);
 
+router.post('/unlike', usersModel.loginRequired, postModel.unlikePost);
 
 module.exports = router;
