@@ -55,11 +55,15 @@ module.exports = {
   },
 
   getAllPost: function (req, res) {
-    var sql = "SELECT *, DATE_FORMAT(created, '%Y-%m-%d') AS created FROM blogs LEFT JOIN blog_" +
-        "body ON blogs.post_id = blog_body.post_id";
+    var sql = "SELECT *, DATE_FORMAT(created, '%Y-%m-%d') AS created, like_times FROM blogs LEFT JOIN " +
+        "blog_body ON blogs.post_id = blog_body.post_id LEFT JOIN post_count ON blogs.post_id = post_count.post_id";
+
+    // var sql = "SELECT *, DATE_FORMAT(created, '%Y-%m-%d') AS created FROM blogs LEFT JOIN " +
+    //     "blog_body ON blogs.post_id = blog_body.post_id";
     sql = mysql.format(sql);
     db.query(sql, function (error, results, fields) {
       if (error) {
+        console.log(error);
         return res
           .status(500)
           .json({message: 'get post error'})
@@ -154,9 +158,36 @@ module.exports = {
           .json({message: 'like post error'})
       }
 
-      return res
-        .status(200)
-        .json({code: '0000', message: 'like post successfully'});
+
+      var sql = "INSERT INTO post_count (post_id, like_times) VALUES (?,?) " +
+      "ON DUPLICATE KEY UPDATE like_times = like_times + 1";
+      var inserts = [post_id, 1];
+      sql = mysql.format(sql,inserts);
+      
+      db.query(sql, function(error, results, fields) {
+        if (error) {
+          console.log('error: ', error);
+          return res
+            .status(500)
+            .json({message: 'count post error'})
+        }
+
+        var sql = "SELECT like_times FROM post_count WHERE post_id = ?";
+        var inserts = [post_id];
+        sql = mysql.format(sql, inserts);
+        db.query(sql, function(error, results, fields) {
+          return res
+            .status(200)
+            .json({
+              code: '0000', 
+              message: 'like post successfully',
+              data: results
+            });
+        });
+
+      });
+
+
     });
   },
 
@@ -198,9 +229,33 @@ module.exports = {
           .json({message: 'unlike post error'})
       }
 
-      return res
-        .status(200)
-        .json({code: '0000', message: 'unlike post successfully'});
+
+      var sql = "UPDATE post_count SET like_times = like_times-1 WHERE post_id = ?";
+      var inserts = [post_id];
+      sql = mysql.format(sql,inserts);
+      
+      db.query(sql, function(error, results, fields) {
+        if (error) {
+          console.log('error: ', error);
+          return res
+            .status(500)
+            .json({message: 'count post error'})
+        }
+
+        var sql = "SELECT like_times FROM post_count WHERE post_id = ?";
+        var inserts = [post_id];
+        sql = mysql.format(sql, inserts);
+        db.query(sql, function(error, results, fields) {
+          return res
+            .status(200)
+            .json({
+              code: '0000', 
+              message: 'unlike post successfully',
+              data: results
+            });
+        });
+      });
+
     });
   }
 

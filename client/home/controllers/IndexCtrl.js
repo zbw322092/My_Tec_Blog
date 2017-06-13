@@ -223,6 +223,8 @@ app.controller('IndexCtrl', [
         .then(function(result) {
           console.log('Like result: ', result);
           $scope.posts[index]['isLiked'] = true;
+          
+          $scope.likeCount = result.data.data.like_times || '';
         })
         .catch(function(err) {
           console.log(err);
@@ -248,6 +250,8 @@ app.controller('IndexCtrl', [
         .then(function(result) {
           console.log('Like result: ', result);
           $scope.posts[index]['isLiked'] = false;
+
+          $scope.likeCount = result.data.data.like_times || '';
         })
         .catch(function(err) {
           console.log(err);

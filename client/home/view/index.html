@@ -6,6 +6,7 @@
     <div class="like-icon-container">
       <div class="like-icon" ng-if="!post.isLiked" ng-click="likeThisPost($index)"></div>
       <div class="like-icon liked-post" ng-if="post.isLiked" ng-click="unlikeThisPost($index)"></div>
+      <span class="likes-count" ng-bind="likeCount || post.like_times"></span>
     </div>
     <em class="post-author">
       <span class="author-name" ng-bind="post.author"></span>
