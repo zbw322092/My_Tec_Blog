@@ -86,12 +86,29 @@ module.exports = {
             // when user login success, set the key to redis
             delete user.password;
             req.session.key = user;
-            return res
-              .status(200)
-              .json({
-                code: '0000',
-                message: 'login successfully'
-              });
+
+            var sql = "SELECT post_id FROM post_likes WHERE liked_userid = ?";
+            var inserts = [user.id];
+            sql = mysql.format(sql, inserts);
+            db.query(sql, function(error, results, fields) {
+              if (error) {
+                console.log(error);
+                return res
+                  .status(500)
+                  .json({
+                    message: 'query user data error'
+                  });
+              }
+
+              return res
+                .status(200)
+                .json({
+                  code: '0000',
+                  message: 'login successfully',
+                  data: results
+                });
+            });
+
           } else {
             return res
               .status(200)

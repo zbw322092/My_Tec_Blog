@@ -1,34 +1,78 @@
 app.controller('IndexCtrl', [
   '$scope',
   '$http',
+  '$q',
   'ngDialog',
   function(
     $scope,
     $http,
+    $q,
     ngDialog
   ) {
 
     console.log('window.GLOBAL.loginStatus: ', window.GLOBAL.loginStatus);
 
     $scope.loginStatus = window.GLOBAL.loginStatus;
+    var likedPostArr = [];
 
-    var getPostSetting = {
-      method: 'GET',
-      url: '/api/post/posts'
-    };
-    $http(getPostSetting)
-      .then(function(result) {
-        var responseData = result.data.data;
-        console.log('result: ', result.data.data);
-        initiPage(responseData);
-      })
-      .catch(function(err) {
-        console.log('err: ', err);
+    initiPage();
+    function initiPage() {
+      var getPostSetting = {
+        method: 'GET',
+        url: '/api/post/posts'
+      };
+      var getLikesSetting = {
+        method: 'GET',
+        url: '/api/post/likes'
+      };
+
+      if ($scope.loginStatus) {
+        var postRequest = $http(getPostSetting);
+        var likeRequest = $http(getLikesSetting);
+        $q.all([
+          postRequest,
+          likeRequest
+        ])
+        .then(function (result) {
+          console.log('resultresultresult: ', result);
+          renderPostandLikes(result);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+
+
+      } else {
+        $http(getPostSetting)
+          .then(function(result) {
+            var responseData = result.data.data;
+            console.log('result: ', result.data.data);
+            $scope.posts = responseData;
+          })
+          .catch(function(err) {
+            console.log('err: ', err);
+          });
+      }
+    }
+
+    function renderPostandLikes(result) {
+      var postsResult = result[0].data.data;
+      var likeResult = result[1].data.data;
+
+      likeResult.forEach(function(value, key, array) {
+        likedPostArr.push(value.post_id);
       });
 
-    function initiPage(result) {
-      $scope.posts = result;
+      postsResult.forEach(function(value,key,array) {
+        console.log('value.post_idvalue.post_id', value.post_id)
+        if (likedPostArr.indexOf(value.post_id) != -1) {
+          value["isLiked"] = true;
+        }
+      });
+
+      $scope.posts = postsResult;
     }
+
 
     // click login icon to open login window
     var loginDialog;

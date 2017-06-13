@@ -74,6 +74,7 @@ app.controller('UserAccountCtrl', [
       $http(logoutSetting)
         .then(function(result) {
           console.log('logout result: ', result);
+          window.location.href = "http://localhost:8889/home";
         })
         .catch(function(err) {
           console.log('logout err: ', err);
