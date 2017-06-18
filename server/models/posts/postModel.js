@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 var db = require('../../database');
+var async = require('async');
 
 module.exports = {
   createPost: function (req, res) {
@@ -141,21 +142,27 @@ module.exports = {
   likePost: function (req, res) {
     var post_id = req.body.post_id;
     var liked_userid = req.session.key['id'];
-    var sql = 'INSERT INTO post_likes (post_id,liked_userid,created,status) VALUES(?,?,NOW(),?)' +
-        ' ON DUPLICATE KEY UPDATE status = ?';
-    var inserts = [post_id, liked_userid, '1', '1'];
-    sql = mysql.format(sql, inserts);
+    
+    function queryOne(next) {
+      var sql = 'INSERT INTO post_likes (post_id,liked_userid,created,status) VALUES(?,?,NOW(),?)' +
+          ' ON DUPLICATE KEY UPDATE status = ?';
+      var inserts = [post_id, liked_userid, '1', '1'];
+      sql = mysql.format(sql, inserts);
 
-    db.query(sql, function (error, results, fields) {
+      db.query(sql, function (error, results, fields) {
 
-      if (error) {
-        console.log('error: ', error);
-        return res
-          .status(500)
-          .json({message: 'like post error'})
-      }
+        if (error) {
+          console.log('error: ', error);
+          return res
+            .status(500)
+            .json({message: 'like post error'})
+        }
 
+        next();
+      })
+    }
 
+    function queryTwo(next) {
       var sql = "INSERT INTO post_count (post_id, like_times) VALUES (?,?) " +
       "ON DUPLICATE KEY UPDATE like_times = like_times + 1";
       var inserts = [post_id, 1];
@@ -169,24 +176,51 @@ module.exports = {
             .json({message: 'count post error'})
         }
 
+        next();
+      })
+    }
+
+    function queryThree(next) {
         var sql = "SELECT like_times FROM post_count WHERE post_id = ?";
         var inserts = [post_id];
         sql = mysql.format(sql, inserts);
         db.query(sql, function(error, results, fields) {
-          return res
-            .status(200)
-            .json({
-              code: '0000', 
-              message: 'like post successfully',
-              data: results
-            });
+          if (error) {
+            console.log('error: ', error);
+            return res
+              .status(500)
+              .json({message: 'get post count error'})
+          }
+
+          next(null, results);
         });
+    }
 
-      });
+    function resFunc(err, results) {
+      if (err) {
+        console.log('error: ', err);
+        return res
+          .status(500)
+          .json({message: 'request error'});
+      }
 
+      return res
+        .status(200)
+          .json({
+            code: '0000', 
+            message: 'like post successfully',
+            data: results
+          });
+    }
 
-    });
+    async.waterfall([
+      queryOne,
+      queryTwo,
+      queryThree
+    ], resFunc);
+
   },
+
 
   getLikes: function (req, res) {
     var userId = req.session.key['id'];
