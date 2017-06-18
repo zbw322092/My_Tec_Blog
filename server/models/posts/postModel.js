@@ -62,7 +62,7 @@ module.exports = {
     function resFunc(err, results) {
       if (err) {
         console.log(err);
-        res.status(500)
+        return res.status(500)
           .json({
             message: 'create post error'
           });
@@ -372,7 +372,7 @@ module.exports = {
 
     function resFunc(error, results) {
       if (error) {
-        res.status(500)
+        return res.status(500)
           .json({
             message: "unlike post error"
           })
