@@ -2,11 +2,13 @@ app.controller('IndexCtrl', [
   '$scope',
   '$http',
   '$q',
+  'WebApiBase',
   'ngDialog',
   function(
     $scope,
     $http,
     $q,
+    WebApiBase,
     ngDialog
   ) {
 
@@ -52,6 +54,29 @@ app.controller('IndexCtrl', [
           });
       }
     }
+
+
+    function WebApiTest() {
+      var webApiBase = new WebApiBase();
+      console.log('webApiBasewebApiBasewebApiBase: ', webApiBase);
+      var getPostSetting = {
+        method: 'GET',
+        url: '/api/post/posts'
+      }
+      var requestData = webApiBase.getRequestData(getPostSetting);
+      console.log('requestDatarequestDatarequestData: ', requestData);
+
+      webApiBase.request(requestData)
+        .then(function(result) {
+          console.log('webapi request result: ', result);
+        })
+        .catch(function(error) {
+          console.log('webapi request error: ', error);
+        });
+
+    }
+    WebApiTest();
+
 
     function renderPostandLikes(result) {
       var postsResult = result[0].data.data;

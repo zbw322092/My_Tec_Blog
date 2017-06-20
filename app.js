@@ -44,6 +44,9 @@ app.set('views', path.join(__dirname, 'server/views/'));
 
 
 app.use(function(req, res, next) {
+  if (!req.session) {
+    return false;
+  }
   app.locals.loginStatus = req.session.key ? true : false;
   next();
 });
