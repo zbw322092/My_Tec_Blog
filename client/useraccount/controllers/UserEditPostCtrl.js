@@ -3,33 +3,27 @@ app.controller('UserEditPostCtrl', [
   '$http',
   '$state',
   '$stateParams',
+  'UserEditPostService',
   'ngDialog',
   function(
     $scope,
     $http,
     $state,
     $stateParams,
+    UserEditPostService,
     ngDialog
   ) {
 
     $scope.username = window.GLOBAL.username ? window.GLOBAL.username : "";
-
     var post_id = $stateParams.id || '';
+    var userEditPostService = new UserEditPostService();
 
     initPage();
     function initPage() {
-      var getSinglePostSetting = {
-        method: 'GET',
-        url: '/api/post/post/' + post_id,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-
-      $http(getSinglePostSetting)
+      userEditPostService.getSinglePost(post_id)
         .then(function(result) {
-          if (result.data.code === '0000') {
-            $scope.post = result.data.data[0] || {};
+          if (result.code === '0000') {
+            $scope.post = result.data[0] || {};
           } else {
             console.log(result.message);
           }
@@ -41,12 +35,9 @@ app.controller('UserEditPostCtrl', [
 
 
     $scope.updatePost = function() {
-      var updatePostSetting = {
+      var reqData = {
         method: 'PUT',
         url: '/api/post/update_post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         params: {
           postId: post_id
         },
@@ -57,9 +48,9 @@ app.controller('UserEditPostCtrl', [
         }
       };
 
-      $http(updatePostSetting)
+      userEditPostService.updatePost(reqData)
         .then(function(result) {
-          if (result.data.code === '0000') {
+          if (result.code === '0000') {
             $state.go('post', {
               id: post_id
             });
@@ -73,20 +64,16 @@ app.controller('UserEditPostCtrl', [
     };
 
     $scope.deletePost = function() {
-      var deletePostSetting = {
+      var reqData = {
         method: 'DELETE',
-        url: '/api/post/delete_post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         params: {
           postId: post_id
         }
       };
 
-      $http(deletePostSetting)
+      userEditPostService.deletePost(reqData)
         .then(function(result) {
-          if (result.data.code === '0000') {
+          if (result.code === '0000') {
             console.log('hhhhhhhh');
             $state.go('index');
           } else {

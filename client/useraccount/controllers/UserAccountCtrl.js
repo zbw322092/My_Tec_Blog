@@ -1,32 +1,33 @@
 app.controller('UserAccountCtrl', [
   '$scope',
-  '$http',
   '$state',
+  'UserAccountService',
   'ngDialog',
   function(
     $scope,
-    $http,
     $state,
+    UserAccountService,
     ngDialog
   ) {
 
     $scope.username = window.GLOBAL.username ? window.GLOBAL.username : "";
+    var userAccountService = new UserAccountService();
+
     $scope.size = 3;
 
     initPage();
     function initPage() {
-      var getUserDataSetting = {
+      var reqData = {
         method: 'GET',
-        url: '/api/user/basic_info',
         params: {
           size: $scope.size,
           page: 1
         }
       };
 
-      $http(getUserDataSetting)
+      userAccountService.getUserData(reqData)
         .then(function(result) {
-          var data = result.data.data || {};
+          var data = result.data || {};
           console.log('data: ', result);
           $scope.posts = data.posts;
           
@@ -63,18 +64,11 @@ app.controller('UserAccountCtrl', [
 
     // logout
     $scope.logout = function() {
-      var logoutSetting = {
-        method: 'GET',
-        url: '/api/user/logout',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
 
-      $http(logoutSetting)
+      userAccountService.logout()
         .then(function(result) {
           console.log('logout result: ', result);
-          window.location.href = "http://localhost:8889/home";
+          window.location.href = "http://localhost:8889/home?env=me";
         })
         .catch(function(err) {
           console.log('logout err: ', err);
@@ -83,46 +77,42 @@ app.controller('UserAccountCtrl', [
 
 
     // submit post
-    $scope.submitPost = function() {
-      var createPostSetting = {
-        method: 'POST',
-        url: '/api/post/post',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          postTitle: $scope.postTitle,
-          tags: $scope.tags,
-          content: $scope.postContent
-        }
-      };
+    // $scope.submitPost = function() {
+    //   var createPostSetting = {
+    //     method: 'POST',
+    //     url: '/api/post/post',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     data: {
+    //       postTitle: $scope.postTitle,
+    //       tags: $scope.tags,
+    //       content: $scope.postContent
+    //     }
+    //   };
 
-      $http(createPostSetting)
-        .then(function(result) {
-          console.log('post result: ', result);
-        })
-        .catch(function(err) {
-          console.log('post err: ', err);
-        });
-    };
+    //   $http(createPostSetting)
+    //     .then(function(result) {
+    //       console.log('post result: ', result);
+    //     })
+    //     .catch(function(err) {
+    //       console.log('post err: ', err);
+    //     });
+    // };
 
     $scope.turnPage = function(page) {
-      console.log(arguments);
-      var getPageDataSetting = {
+      var reqData = {
         method: 'GET',
-        url: '/api/user/basic_info',
         params: {
           size: $scope.size,
           page: page
         }
       };
 
-      $http(getPageDataSetting)
+      userAccountService.getPageData(reqData)
         .then(function(result) {
-          var data = result.data.data || {};
-          console.log('data: ', result);
+          var data = result.data || {};
           $scope.posts = data.posts;
-          
           $scope.postAmount = data.postAmount;
         })
         .catch(function(err) {

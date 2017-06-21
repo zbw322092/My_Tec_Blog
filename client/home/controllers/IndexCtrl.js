@@ -68,7 +68,7 @@ app.controller('IndexCtrl', [
     var loginDialog;
     $scope.login = function(status) {
       if (status) {
-        window.location.href = 'http://localhost:8889/useraccount';
+        window.location.href = 'http://localhost:8889/useraccount?env=me';
       }
       loginDialog = ngDialog.open({
         templateUrl: '../client/home/view/login_dialog.html',
