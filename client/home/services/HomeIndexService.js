@@ -1,15 +1,14 @@
-app.service('HomeService', ['WebApiBase', function(WebApiBase) {
+app.service('HomeService', ['BlogWebApi', function(BlogWebApi) {
   
   function defaultResProcess (result) {
     return result;
   }
 
-  return WebApiBase.extend({
+  return BlogWebApi.extend({
     
     getPosts: function() {
-      var reqData = this.getRequestData({
-        method: 'GET',
-        url: '/api/post/posts'
+      var reqData = this.getRequestData('/post/posts', {
+        method: 'GET'
       });
 
       return this.request(reqData, defaultResProcess);

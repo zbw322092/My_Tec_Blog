@@ -5,6 +5,7 @@ require('../../lib/lib_vendor/');
 require('../../lib/lib_angular/core/');
 require('../../lib/lib_angular/stylesheets/');
 
+require('../_config');
 require('./router.js');
 require('./services');
 require('./controllers/');
