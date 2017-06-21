@@ -9,7 +9,7 @@ app.factory('BlogWebApi', [
   return WebApiBase.extend({
     // override origin method in WebApiBase according to bussiness logic need
     getBizRequestUrl: function() {
-      return encodeURI(enviormentBaseConfig.get('blogMainApi'));
+      return enviormentBaseConfig.get('blogMainApi');
     }
   });
 

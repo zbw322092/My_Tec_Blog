@@ -1,12 +1,10 @@
 app.controller('IndexCtrl', [
   '$scope',
-  '$http',
   '$q',
   'HomeService',
   'ngDialog',
   function(
     $scope,
-    $http,
     $q,
     HomeService,
     ngDialog
@@ -21,21 +19,11 @@ app.controller('IndexCtrl', [
 
     initiPage();
     function initiPage() {
-      var getPostSetting = {
-        method: 'GET',
-        url: '/api/post/posts'
-      };
-      var getLikesSetting = {
-        method: 'GET',
-        url: '/api/post/likes'
-      };
 
       if ($scope.loginStatus) {
-        var postRequest = $http(getPostSetting);
-        var likeRequest = $http(getLikesSetting);
         $q.all([
-          postRequest,
-          likeRequest
+          homeService.getPosts(),
+          homeService.getLikes()
         ])
         .then(function (result) {
           renderPostandLikes(result);
@@ -46,9 +34,9 @@ app.controller('IndexCtrl', [
 
 
       } else {
-        $http(getPostSetting)
+        homeService.getPosts()
           .then(function(result) {
-            var responseData = result.data.data;
+            var responseData = result.data;
             $scope.posts = responseData;
           })
           .catch(function(err) {
@@ -58,23 +46,9 @@ app.controller('IndexCtrl', [
     }
 
 
-    function WebApiTest() {
-
-      homeService.getPosts()
-        .then(function(result) {
-          console.log('webapi request result: ', result);
-        })
-        .catch(function(error) {
-          console.log('webapi request error: ', error);
-        });
-
-    }
-    WebApiTest();
-
-
     function renderPostandLikes(result) {
-      var postsResult = result[0].data.data;
-      var likeResult = result[1].data.data;
+      var postsResult = result[0].data;
+      var likeResult = result[1].data;
 
       likeResult.forEach(function(value, key, array) {
         likedPostArr.push(value.post_id);
@@ -109,16 +83,12 @@ app.controller('IndexCtrl', [
       var loginFormData = {};
       loginFormData.email = this.loginForm.email.$modelValue;
       loginFormData.password = this.loginForm.password.$modelValue;
-      var loginSetting = {
+      var loginReqData = {
         method: 'POST',
-        url: '/api/user/login',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         data: loginFormData
       };
 
-      $http(loginSetting)
+      homeService.login(loginReqData)
         .then(function(result) {
           console.log('login result: ', result);
           loginDialog.close();
@@ -144,23 +114,18 @@ app.controller('IndexCtrl', [
     $scope.submitRegisterForm = function() {
       // ngDialog creates a new child scope, so get data likes $scope.register.email does not working, 
       // using we can get ng-model value using this.email.
-      console.log(this.registerForm.email.$modelValue);
       var registerFormData = {};
       registerFormData.email = this.registerForm.email.$modelValue;
       registerFormData.name = this.registerForm.username.$modelValue;
       registerFormData.phone = this.registerForm.phone.$modelValue;
       registerFormData.password = this.registerForm.password.$modelValue;
-      console.log('registerFormData: ', registerFormData);
 
-      var registerSetting = {
+      var registerReqData = {
         method: 'POST',
-        url: '/api/user/register',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         data: registerFormData
-      }
-      $http(registerSetting)
+      };
+
+      homeService.register(registerReqData)
         .then(function(result) {
           console.log('sign up result: ', result);
         })
@@ -203,17 +168,14 @@ app.controller('IndexCtrl', [
     };
 
     $scope.userExist = function() {
-      var userExistSetting = {
+      var reqData = {
         method: 'POST',
-        url: '/api/user/user_exist',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         data: {
           email: 'youremail@hotmail.com'
         }
-      }
-      $http(userExistSetting)
+      };
+
+      homeService.userExist(reqData)
         .then(function(result) {
           console.log('user exist result: ', result);
         })
@@ -227,18 +189,14 @@ app.controller('IndexCtrl', [
     $scope.likeThisPost = function(index) {
       var post_id = $scope.posts[index].post_id;
 
-      var likePostSetting = {
+      var reqData = {
         method: 'POST',
-        url: '/api/post/like',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         data: {
           post_id: post_id
         }
       };
 
-      $http(likePostSetting)
+      homeService.likePost(reqData)
         .then(function(result) {
           console.log('Like result: ', result);
           $scope.posts[index]['isLiked'] = true;
@@ -248,24 +206,19 @@ app.controller('IndexCtrl', [
         .catch(function(err) {
           console.log(err);
         });
-
     };
 
     $scope.unlikeThisPost = function(index) {
       var post_id = $scope.posts[index].post_id;
 
-      var unlikePostSetting = {
+      var reqData = {
         method: 'POST',
-        url: '/api/post/unlike',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         data: {
           post_id: post_id
         }
       };
 
-      $http(unlikePostSetting)
+      homeService.unlikePost(reqData)
         .then(function(result) {
           console.log('Like result: ', result);
           $scope.posts[index]['isLiked'] = false;
@@ -276,9 +229,6 @@ app.controller('IndexCtrl', [
           console.log(err);
         });
     };
-
-
-
 
   }
 ]);
