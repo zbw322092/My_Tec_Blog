@@ -6,6 +6,7 @@ require('../../lib/lib_angular/core/');
 require('../../lib/lib_angular/stylesheets/');
 
 require('./router.js');
+require('./services');
 require('./controllers/');
 require('./stylesheets/index.js');
 require('./view/');

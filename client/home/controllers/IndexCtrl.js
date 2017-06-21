@@ -2,19 +2,21 @@ app.controller('IndexCtrl', [
   '$scope',
   '$http',
   '$q',
-  'WebApiBase',
+  'HomeService',
   'ngDialog',
   function(
     $scope,
     $http,
     $q,
-    WebApiBase,
+    HomeService,
     ngDialog
   ) {
 
     console.log('window.GLOBAL.loginStatus: ', window.GLOBAL.loginStatus);
 
     $scope.loginStatus = window.GLOBAL.loginStatus;
+    var homeService = new HomeService();
+
     var likedPostArr = [];
 
     initiPage();
@@ -57,16 +59,8 @@ app.controller('IndexCtrl', [
 
 
     function WebApiTest() {
-      var webApiBase = new WebApiBase();
-      console.log('webApiBasewebApiBasewebApiBase: ', webApiBase);
-      var getPostSetting = {
-        method: 'GET',
-        url: '/api/post/posts'
-      }
-      var requestData = webApiBase.getRequestData(getPostSetting);
-      console.log('requestDatarequestDatarequestData: ', requestData);
 
-      webApiBase.request(requestData)
+      homeService.getPosts()
         .then(function(result) {
           console.log('webapi request result: ', result);
         })
